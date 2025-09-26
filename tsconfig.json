@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "NodeNext",
+		"strict": true,
+		"verbatimModuleSyntax": true,
+		"skipLibCheck": true,
+		"types": [
+			"node"
+		],
+		"outDir": "./dist",
+		"paths": {
+			"$routers/*": [
+				"./src/routers/*"
+			],
+			"$db/*": [
+				"./src/db/*"
+			],
+			"$lib/*": [
+				"./src/lib/*"
+			]
+		}
+	},
+	"exclude": [
+		"node_modules"
+	]
+}
