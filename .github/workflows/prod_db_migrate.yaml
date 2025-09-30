@@ -1,15 +1,17 @@
 name: DB prod migrate
 
 on:
-  push:
-    paths:
-      - db/*/schema.ts
+  pull_request:
+    #paths:
+    #  - db/*/schema.ts
     branches:
       - main
 
 jobs:
   style:
     runs-on: ubuntu-latest
+    env:
+      DB_DIRECT_URL: ${{ secrets.DB_DIRECT_URL }}
 
     steps:
       - uses: actions/checkout@v4
