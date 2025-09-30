@@ -1,9 +1,9 @@
 name: DB prod migrate
 
 on:
-  pull_request:
-    #paths:
-    #  - db/*/schema.ts
+  push:
+    paths:
+      - db/*/schema.ts
     branches:
       - main
 
