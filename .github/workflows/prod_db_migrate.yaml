@@ -1,0 +1,34 @@
+name: DB prod migrate
+
+on:
+  push:
+    paths:
+      - db/*/schema.ts
+    branches:
+      - main
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    env:
+      DB_DIRECT_URL: ${{ secrets.DB_DIRECT_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node_version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run migrations
+        run: pnpm db:migrate

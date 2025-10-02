@@ -5,6 +5,4 @@ function connectDB(dbUrl: string) {
 	return drizzle(dbUrl, { schema: { ...userSchema } });
 }
 
-export {
-	connectDB
-}
+export { connectDB };
