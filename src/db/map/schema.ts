@@ -1,5 +1,6 @@
-import { relations } from "drizzle-orm";
-import { pgTable, varchar } from "drizzle-orm/pg-core";
+import { pgTable, pgEnum, varchar } from "drizzle-orm/pg-core";
+
+const mapType = pgEnum("map_type", ["forrest", "arctic", "desert", "bay"]);
 
 const mapTable = pgTable("map", {
 	id: varchar("id", { length: 36 }).primaryKey(),
@@ -8,5 +9,6 @@ const mapTable = pgTable("map", {
 });
 
 export {
-	mapTable
+	mapTable,
+	mapType
 };
