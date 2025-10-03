@@ -4,7 +4,9 @@ import * as regionSchema from "./region/schema.js";
 import * as userSchema from "./user/schema.js";
 
 function connectDB(dbUrl: string) {
-	return drizzle(dbUrl, { schema: { ...userSchema, ...regionSchema, ...mapShcema } });
+  return drizzle(dbUrl, {
+    schema: { ...userSchema, ...regionSchema, ...mapShcema },
+  });
 }
 
 export { connectDB };
