@@ -1,4 +1,5 @@
 import { integer, pgEnum, pgTable, real, text, varchar } from "drizzle-orm/pg-core";
+import { tileType } from "$db/tileType/schema.js";
 
 const buildingType = pgEnum("building_type", ["housing", "work", "service", "educational"]);
 
@@ -9,7 +10,7 @@ const buildingTable = pgTable("building", {
   buildingType: buildingType("type").notNull(),
   tilesUsed: integer("tiles_used").notNull(),
   maxEntities: integer("max_entities").notNull(),
-  buildableOnTilesType: text().array().notNull(),
+  buildableOnTiles: tileType("buildable_on_tiles").array().notNull(),
 });
 
 export { buildingTable, buildingType };
