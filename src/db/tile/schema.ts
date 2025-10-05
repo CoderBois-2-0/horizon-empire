@@ -14,7 +14,7 @@ const tileTable = pgTable(
       columns: [table.regionID],
       foreignColumns: [regionsTable.id],
     }),
-  ]
+  ],
 );
 
 export { tileTable };
