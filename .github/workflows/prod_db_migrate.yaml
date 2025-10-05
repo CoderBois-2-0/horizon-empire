@@ -3,7 +3,7 @@ name: DB prod migrate
 on:
   push:
     paths:
-      - db/*/schema.ts
+      - "**/db/*/schema.ts"
     branches:
       - main
 
