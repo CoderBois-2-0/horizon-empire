@@ -72,12 +72,8 @@
           "name": "region_map_id_map_id_fk",
           "tableFrom": "region",
           "tableTo": "map",
-          "columnsFrom": [
-            "map_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["map_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -118,9 +114,7 @@
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {},
@@ -132,33 +126,17 @@
     "public.map_size": {
       "name": "map_size",
       "schema": "public",
-      "values": [
-        "small",
-        "medium",
-        "large"
-      ]
+      "values": ["small", "medium", "large"]
     },
     "public.map_type": {
       "name": "map_type",
       "schema": "public",
-      "values": [
-        "forrest",
-        "arctic",
-        "desert",
-        "bay"
-      ]
+      "values": ["forrest", "arctic", "desert", "bay"]
     },
     "public.tile_type": {
       "name": "tile_type",
       "schema": "public",
-      "values": [
-        "grass",
-        "rock",
-        "water",
-        "snow",
-        "sand",
-        "farmland"
-      ]
+      "values": ["grass", "rock", "water", "snow", "sand", "farmland"]
     }
   },
   "schemas": {},

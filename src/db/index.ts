@@ -7,7 +7,13 @@ import { buildingTable } from "./building/schema.js";
 
 function connectDB(dbUrl: string) {
   return drizzle(dbUrl, {
-    schema: { ...userSchema, ...regionSchema, ...mapSchema, ...tileTypeSchema, ...buildingTable },
+    schema: {
+      ...userSchema,
+      ...regionSchema,
+      ...mapSchema,
+      ...tileTypeSchema,
+      ...buildingTable,
+    },
   });
 }
 

@@ -1,7 +1,19 @@
-import { integer, pgEnum, pgTable, real, text, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  real,
+  text,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { tileType } from "$db/tileType/schema.js";
 
-const buildingType = pgEnum("building_type", ["housing", "work", "service", "educational"]);
+const buildingType = pgEnum("building_type", [
+  "housing",
+  "work",
+  "service",
+  "educational",
+]);
 
 const buildingTable = pgTable("building", {
   id: varchar("id", { length: 36 }).primaryKey(),
