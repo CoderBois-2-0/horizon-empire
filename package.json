@@ -2,7 +2,7 @@
   "name": "horizon-empire",
   "type": "module",
   "scripts": {
-    "db:generate": "drizzle-kit generate",
+    "db:generate": "tsx node_modules/drizzle-kit/bin.cjs generate",
     "db:migrate": "drizzle-kit migrate",
     "lint": "eslint .",
     "format": "prettier --write .",
