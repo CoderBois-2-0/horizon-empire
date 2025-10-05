@@ -3,7 +3,6 @@ import {
   pgEnum,
   pgTable,
   real,
-  text,
   varchar,
 } from "drizzle-orm/pg-core";
 import { tileType } from "$db/tileType/schema.js";
