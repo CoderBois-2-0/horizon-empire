@@ -15,6 +15,13 @@
       "when": 1759696956930,
       "tag": "0001_steep_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759699766462,
+      "tag": "0002_aberrant_shatterstar",
+      "breakpoints": true
     }
   ]
 }
