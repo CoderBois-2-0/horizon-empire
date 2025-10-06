@@ -2,7 +2,14 @@ import { placedBuildingTable } from "$db/placedBuilding/schema.js";
 import { foreignKey } from "drizzle-orm/pg-core";
 import { pgTable, pgEnum, varchar } from "drizzle-orm/pg-core";
 
-const ageCategory = pgEnum("age_category", ["newborn", "child", "teen", "young adult", "adult", "senior"]);
+const ageCategory = pgEnum("age_category", [
+  "newborn",
+  "child",
+  "teen",
+  "young adult",
+  "adult",
+  "senior",
+]);
 const incomeGroup = pgEnum("income_group", ["low", "medium", "high"]);
 
 const personTable = pgTable(
@@ -20,7 +27,7 @@ const personTable = pgTable(
       columns: [table.housingID],
       foreignColumns: [placedBuildingTable.id],
     }),
-  ]
+  ],
 );
 
 export { personTable, ageCategory, incomeGroup };
