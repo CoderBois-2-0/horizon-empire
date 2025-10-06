@@ -24,7 +24,7 @@ const placedBuildingTable = pgTable(
       columns: [table.cityID],
       foreignColumns: [cityTable.id],
     }),
-  ]
+  ],
 );
 
 export { placedBuildingTable };
