@@ -8,17 +8,17 @@ import * as citySchema from "./city/schema.js";
 import * as buildingTable from "./building/schema.js";
 
 function connectDB(dbUrl: string) {
-	return drizzle(dbUrl, {
-		schema: {
-			...userSchema,
-			...regionSchema,
-			...mapSchema,
-			...tileTypeSchema,
-			...tileSchema,
-			...citySchema,
-			...buildingTable,
-		},
-	});
+  return drizzle(dbUrl, {
+    schema: {
+      ...userSchema,
+      ...regionSchema,
+      ...mapSchema,
+      ...tileTypeSchema,
+      ...tileSchema,
+      ...citySchema,
+      ...buildingTable,
+    },
+  });
 }
 
 export { connectDB };
