@@ -36,6 +36,13 @@
       "when": 1759766418958,
       "tag": "0004_ordinary_brood",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1759767988629,
+      "tag": "0005_violet_dragon_lord",
+      "breakpoints": true
     }
   ]
 }
