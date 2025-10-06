@@ -4,7 +4,7 @@ import { pgTable, varchar } from "drizzle-orm/pg-core";
 
 const cityTable = pgTable("cities", {
   id: varchar("id", { length: 36 }).primaryKey(),
-  name: varchar("name", { length: 64 }).notNull(),
+  name: varchar("name", { length: 36 }).notNull(),
 
   userID: varchar("user_id", { length: 36 })
     .notNull()
