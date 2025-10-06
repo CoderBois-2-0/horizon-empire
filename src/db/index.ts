@@ -5,8 +5,9 @@ import * as userSchema from "./user/schema.js";
 import * as tileTypeSchema from "./tileType/schema.js";
 import * as tileSchema from "./tile/schema.js";
 import * as citySchema from "./city/schema.js";
-import * as buildingTable from "./building/schema.js";
+import * as buildingSchema from "./building/schema.js";
 import * as resourceInventorySchema from "./resourceInventory/schema.js";
+import * as resourceSchema from "./resource/schema.js";
 import * as placedBuildingSchema from "./placedBuilding/schema.js";
 import * as personSchema from "./person/schema.js";
 
@@ -19,8 +20,9 @@ function connectDB(dbUrl: string) {
       ...tileTypeSchema,
       ...tileSchema,
       ...citySchema,
-      ...buildingTable,
+      ...buildingSchema,
       ...resourceInventorySchema,
+      ...resourceSchema,
       ...placedBuildingSchema,
       ...personSchema,
     },
