@@ -1,9 +1,66 @@
 {
-  "id": "c8e67a7b-eb01-47bb-b97a-7b85bed9be2f",
-  "prevId": "1da469bd-b64e-44fe-8edd-c1cdfc711858",
+  "id": "eb5f3a83-8291-414a-8ab6-ad1616b172af",
+  "prevId": "c8e67a7b-eb01-47bb-b97a-7b85bed9be2f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.building": {
+      "name": "building",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resource_cost": {
+          "name": "resource_cost",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "building_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tiles_used": {
+          "name": "tiles_used",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "max_entities": {
+          "name": "max_entities",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "buildable_on_tiles": {
+          "name": "buildable_on_tiles",
+          "type": "tile_type[]",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.map": {
       "name": "map",
       "schema": "",
@@ -165,6 +222,11 @@
     }
   },
   "enums": {
+    "public.building_type": {
+      "name": "building_type",
+      "schema": "public",
+      "values": ["housing", "work", "service", "educational"]
+    },
     "public.map_size": {
       "name": "map_size",
       "schema": "public",
