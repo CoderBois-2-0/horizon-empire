@@ -1,6 +1,6 @@
 {
-  "id": "abc7dfbf-046e-4995-a20a-737e01202848",
-  "prevId": "5707c555-14c1-4e61-8441-635d9e63d9ea",
+  "id": "8c660740-7de1-49e9-ad4f-f9cf3d221f01",
+  "prevId": "abc7dfbf-046e-4995-a20a-737e01202848",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -150,6 +150,63 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.placed_buildings": {
+      "name": "placed_buildings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "building_id": {
+          "name": "building_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city_id": {
+          "name": "city_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "build_on_tiles": {
+          "name": "build_on_tiles",
+          "type": "tile_type[]",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "placed_buildings_building_id_building_id_fk": {
+          "name": "placed_buildings_building_id_building_id_fk",
+          "tableFrom": "placed_buildings",
+          "tableTo": "building",
+          "columnsFrom": ["building_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "placed_buildings_city_id_cities_id_fk": {
+          "name": "placed_buildings_city_id_cities_id_fk",
+          "tableFrom": "placed_buildings",
+          "tableTo": "cities",
+          "columnsFrom": ["city_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

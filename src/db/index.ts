@@ -8,6 +8,7 @@ import * as citySchema from "./city/schema.js";
 import * as buildingTable from "./building/schema.js";
 import * as resourceInventorySchema from "./resourceInventory/schema.js";
 import * as resourceSchema from "./resource/schema.js";
+import * as placedBuildingScheme from "./placedBuilding/schema.js";
 
 function connectDB(dbUrl: string) {
   return drizzle(dbUrl, {
@@ -21,6 +22,7 @@ function connectDB(dbUrl: string) {
       ...buildingTable,
       ...resourceInventorySchema,
       ...resourceSchema,
+      ...placedBuildingScheme,
     },
   });
 }
