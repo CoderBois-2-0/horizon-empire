@@ -13,7 +13,6 @@ function connectDB(dbUrl: string) {
       ...mapSchema,
       ...tileTypeSchema,
       ...buildingTable,
-      ...tileSchema,
     },
   });
 }
