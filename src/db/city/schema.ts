@@ -6,11 +6,11 @@ const cityTable = pgTable("cities", {
   id: varchar("id", { length: 36 }).primaryKey(),
   name: varchar("name", { length: 64 }).notNull(),
 
-  user_id: varchar("user_id", { length: 36 })
+  userID: varchar("user_id", { length: 36 })
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
 
-  map_id: varchar("map_id", { length: 36 })
+  mapID: varchar("map_id", { length: 36 })
     .notNull()
     .references(() => mapTable.id, { onDelete: "cascade" }),
 });
