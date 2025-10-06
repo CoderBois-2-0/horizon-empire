@@ -7,16 +7,16 @@ import { buildingTable } from "./building/schema.js";
 import * as tileSchema from "./tile/schema.js";
 
 function connectDB(dbUrl: string) {
-	return drizzle(dbUrl, {
-		schema: {
-			...userSchema,
-			...regionSchema,
-			...mapSchema,
-			...tileTypeSchema,
-			...buildingTable,
-			...tileSchema,
-		},
-	});
+  return drizzle(dbUrl, {
+    schema: {
+      ...userSchema,
+      ...regionSchema,
+      ...mapSchema,
+      ...tileTypeSchema,
+      ...buildingTable,
+      ...tileSchema,
+    },
+  });
 }
 
 export { connectDB };
