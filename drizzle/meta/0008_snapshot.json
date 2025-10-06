@@ -1,6 +1,6 @@
 {
-  "id": "fbe1549e-6835-4fcb-a9dd-a7e410a53c66",
-  "prevId": "8c660740-7de1-49e9-ad4f-f9cf3d221f01",
+  "id": "233d1d14-710f-49dc-9161-6f758b467d57",
+  "prevId": "fbe1549e-6835-4fcb-a9dd-a7e410a53c66",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -150,6 +150,55 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.persons": {
+      "name": "persons",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "age_category": {
+          "name": "age_category",
+          "type": "age_category",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "income_group": {
+          "name": "income_group",
+          "type": "income_group",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "housing_id": {
+          "name": "housing_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "persons_housing_id_placed_buildings_id_fk": {
+          "name": "persons_housing_id_placed_buildings_id_fk",
+          "tableFrom": "persons",
+          "tableTo": "placed_buildings",
+          "columnsFrom": ["housing_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -409,6 +458,16 @@
       "name": "map_type",
       "schema": "public",
       "values": ["forrest", "arctic", "desert", "bay"]
+    },
+    "public.age_category": {
+      "name": "age_category",
+      "schema": "public",
+      "values": ["newborn", "child", "teen", "young adult", "adult", "senior"]
+    },
+    "public.income_group": {
+      "name": "income_group",
+      "schema": "public",
+      "values": ["low", "medium", "high"]
     },
     "public.tile_type": {
       "name": "tile_type",
