@@ -5,6 +5,7 @@ import * as userSchema from "./user/schema.js";
 import * as tileTypeSchema from "./tileType/schema.js";
 import * as tileSchema from "./tile/schema.js";
 import * as citySchema from "./city/schema.js";
+import * as buildingTable from "./building/schema.js";
 
 function connectDB(dbUrl: string) {
   return drizzle(dbUrl, {
@@ -15,6 +16,7 @@ function connectDB(dbUrl: string) {
       ...tileTypeSchema,
       ...tileSchema,
       ...citySchema,
+      ...buildingTable,
     },
   });
 }

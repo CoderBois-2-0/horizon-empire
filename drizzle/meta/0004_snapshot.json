@@ -1,6 +1,6 @@
 {
-  "id": "eb5f3a83-8291-414a-8ab6-ad1616b172af",
-  "prevId": "c8e67a7b-eb01-47bb-b97a-7b85bed9be2f",
+  "id": "dd9003b4-bfc5-40c0-890d-250a87af79dc",
+  "prevId": "eb5f3a83-8291-414a-8ab6-ad1616b172af",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -55,6 +55,62 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cities": {
+      "name": "cities",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "map_id": {
+          "name": "map_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cities_user_id_users_id_fk": {
+          "name": "cities_user_id_users_id_fk",
+          "tableFrom": "cities",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "cities_map_id_map_id_fk": {
+          "name": "cities_map_id_map_id_fk",
+          "tableFrom": "cities",
+          "tableTo": "map",
+          "columnsFrom": ["map_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
