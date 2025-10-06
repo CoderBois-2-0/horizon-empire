@@ -22,6 +22,13 @@
       "when": 1759698076711,
       "tag": "0002_charming_vampiro",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1759762410033,
+      "tag": "0003_early_thaddeus_ross",
+      "breakpoints": true
     }
   ]
 }
