@@ -15,6 +15,13 @@
       "when": 1759696956930,
       "tag": "0001_steep_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759698076711,
+      "tag": "0002_charming_vampiro",
+      "breakpoints": true
     }
   ]
 }

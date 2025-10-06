@@ -1,6 +1,6 @@
 {
-  "id": "1da469bd-b64e-44fe-8edd-c1cdfc711858",
-  "prevId": "6938d7a4-43d2-4483-85b3-7bc97e68165c",
+  "id": "c8e67a7b-eb01-47bb-b97a-7b85bed9be2f",
+  "prevId": "1da469bd-b64e-44fe-8edd-c1cdfc711858",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -72,8 +72,58 @@
           "name": "region_map_id_map_id_fk",
           "tableFrom": "region",
           "tableTo": "map",
-          "columnsFrom": ["map_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "map_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tile": {
+      "name": "tile",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "tile_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "region_id": {
+          "name": "region_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tile_region_id_region_id_fk": {
+          "name": "tile_region_id_region_id_fk",
+          "tableFrom": "tile",
+          "tableTo": "region",
+          "columnsFrom": [
+            "region_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -114,7 +164,9 @@
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": ["username"]
+          "columns": [
+            "username"
+          ]
         }
       },
       "policies": {},
@@ -126,17 +178,33 @@
     "public.map_size": {
       "name": "map_size",
       "schema": "public",
-      "values": ["small", "medium", "large"]
+      "values": [
+        "small",
+        "medium",
+        "large"
+      ]
     },
     "public.map_type": {
       "name": "map_type",
       "schema": "public",
-      "values": ["forrest", "arctic", "desert", "bay"]
+      "values": [
+        "forrest",
+        "arctic",
+        "desert",
+        "bay"
+      ]
     },
     "public.tile_type": {
       "name": "tile_type",
       "schema": "public",
-      "values": ["grass", "rock", "water", "snow", "sand", "farmland"]
+      "values": [
+        "grass",
+        "rock",
+        "water",
+        "snow",
+        "sand",
+        "farmland"
+      ]
     }
   },
   "schemas": {},
