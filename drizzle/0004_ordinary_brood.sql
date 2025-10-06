@@ -1,6 +1,6 @@
 CREATE TABLE "cities" (
 	"id" varchar(36) PRIMARY KEY NOT NULL,
-	"name" varchar(64) NOT NULL,
+	"name" varchar(32) NOT NULL,
 	"user_id" varchar(36) NOT NULL,
 	"map_id" varchar(36) NOT NULL
 );
