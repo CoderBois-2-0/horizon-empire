@@ -96,12 +96,8 @@
           "name": "cities_user_id_users_id_fk",
           "tableFrom": "cities",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -109,12 +105,8 @@
           "name": "cities_map_id_map_id_fk",
           "tableFrom": "cities",
           "tableTo": "map",
-          "columnsFrom": [
-            "map_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["map_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -173,12 +165,8 @@
           "name": "jobs_person_id_persons_id_fk",
           "tableFrom": "jobs",
           "tableTo": "persons",
-          "columnsFrom": [
-            "person_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["person_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -186,12 +174,8 @@
           "name": "jobs_placed_building_id_placed_buildings_id_fk",
           "tableFrom": "jobs",
           "tableTo": "placed_buildings",
-          "columnsFrom": [
-            "placed_building_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["placed_building_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -278,12 +262,8 @@
           "name": "persons_housing_id_placed_buildings_id_fk",
           "tableFrom": "persons",
           "tableTo": "placed_buildings",
-          "columnsFrom": [
-            "housing_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["housing_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -330,12 +310,8 @@
           "name": "placed_buildings_building_id_building_id_fk",
           "tableFrom": "placed_buildings",
           "tableTo": "building",
-          "columnsFrom": [
-            "building_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["building_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -343,12 +319,8 @@
           "name": "placed_buildings_city_id_cities_id_fk",
           "tableFrom": "placed_buildings",
           "tableTo": "cities",
-          "columnsFrom": [
-            "city_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["city_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -388,12 +360,8 @@
           "name": "region_map_id_map_id_fk",
           "tableFrom": "region",
           "tableTo": "map",
-          "columnsFrom": [
-            "map_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["map_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -452,12 +420,8 @@
           "name": "resource_inventories_city_id_cities_id_fk",
           "tableFrom": "resource_inventories",
           "tableTo": "cities",
-          "columnsFrom": [
-            "city_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["city_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -504,12 +468,8 @@
           "name": "resource_junctions_resource_id_resources_id_fk",
           "tableFrom": "resource_junctions",
           "tableTo": "resources",
-          "columnsFrom": [
-            "resource_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["resource_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -517,12 +477,8 @@
           "name": "resource_junctions_inventory_id_resource_inventories_id_fk",
           "tableFrom": "resource_junctions",
           "tableTo": "resource_inventories",
-          "columnsFrom": [
-            "inventory_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["inventory_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -563,12 +519,8 @@
           "name": "tile_region_id_region_id_fk",
           "tableFrom": "tile",
           "tableTo": "region",
-          "columnsFrom": [
-            "region_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["region_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -609,9 +561,7 @@
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {},
@@ -623,12 +573,7 @@
     "public.building_type": {
       "name": "building_type",
       "schema": "public",
-      "values": [
-        "housing",
-        "work",
-        "service",
-        "educational"
-      ]
+      "values": ["housing", "work", "service", "educational"]
     },
     "public.job_type": {
       "name": "job_type",
@@ -646,54 +591,27 @@
     "public.map_size": {
       "name": "map_size",
       "schema": "public",
-      "values": [
-        "small",
-        "medium",
-        "large"
-      ]
+      "values": ["small", "medium", "large"]
     },
     "public.map_type": {
       "name": "map_type",
       "schema": "public",
-      "values": [
-        "forrest",
-        "arctic",
-        "desert",
-        "bay"
-      ]
+      "values": ["forrest", "arctic", "desert", "bay"]
     },
     "public.age_category": {
       "name": "age_category",
       "schema": "public",
-      "values": [
-        "newborn",
-        "child",
-        "teen",
-        "young adult",
-        "adult",
-        "senior"
-      ]
+      "values": ["newborn", "child", "teen", "young adult", "adult", "senior"]
     },
     "public.income_group": {
       "name": "income_group",
       "schema": "public",
-      "values": [
-        "low",
-        "medium",
-        "high"
-      ]
+      "values": ["low", "medium", "high"]
     },
     "public.tile_type": {
       "name": "tile_type",
       "schema": "public",
-      "values": [
-        "grass",
-        "rock",
-        "water",
-        "snow",
-        "sand",
-        "farmland"
-      ]
+      "values": ["grass", "rock", "water", "snow", "sand", "farmland"]
     }
   },
   "schemas": {},
