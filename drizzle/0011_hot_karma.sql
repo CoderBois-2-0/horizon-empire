@@ -1,0 +1,1 @@
+CREATE VIEW "public"."region_with_total_tiles" AS (select "id", "name", "map_id", total_region_tiles("id") as "total_tiles" from "region");
