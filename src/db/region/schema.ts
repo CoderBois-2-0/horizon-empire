@@ -1,6 +1,6 @@
 import { mapTable } from "$db/map/schema.js";
-import { relations } from "drizzle-orm";
-import { pgTable, foreignKey, varchar } from "drizzle-orm/pg-core";
+import { getTableColumns, relations, sql } from "drizzle-orm";
+import { pgTable, foreignKey, varchar, pgView } from "drizzle-orm/pg-core";
 
 const regionsTable = pgTable(
   "region",
@@ -21,4 +21,13 @@ const regionRelation = relations(regionsTable, ({ one }) => ({
   }),
 }));
 
-export { regionsTable, regionRelation };
+const regionWithTotalTiles = pgView("region_with_total_tiles").as((qb) =>
+  qb
+    .select({
+      ...getTableColumns(regionsTable),
+      totalTiles: sql`total_region_tiles(${regionsTable.id})`.as("total_tiles"),
+    })
+    .from(regionsTable),
+);
+
+export { regionsTable, regionRelation, regionWithTotalTiles };

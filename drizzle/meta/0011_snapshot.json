@@ -1,6 +1,6 @@
 {
-  "id": "f835abc7-e160-431b-90a8-eff2bf18ccb4",
-  "prevId": "233d1d14-710f-49dc-9161-6f758b467d57",
+  "id": "162727cb-2dc8-4f42-a774-870416edd2c5",
+  "prevId": "c06b3344-5a1b-4962-87e7-ceb4b2fe7a77",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -98,7 +98,7 @@
           "tableTo": "users",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         },
         "cities_map_id_map_id_fk": {
@@ -107,7 +107,7 @@
           "tableTo": "map",
           "columnsFrom": ["map_id"],
           "columnsTo": ["id"],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -536,7 +536,35 @@
   "sequences": {},
   "roles": {},
   "policies": {},
-  "views": {},
+  "views": {
+    "public.region_with_total_tiles": {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "map_id": {
+          "name": "map_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "definition": "select \"id\", \"name\", \"map_id\", total_region_tiles(\"id\") as \"total_tiles\" from \"region\"",
+      "name": "region_with_total_tiles",
+      "schema": "public",
+      "isExisting": false,
+      "materialized": false
+    }
+  },
   "_meta": {
     "columns": {},
     "schemas": {},

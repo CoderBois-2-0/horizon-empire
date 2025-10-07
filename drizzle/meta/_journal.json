@@ -71,6 +71,13 @@
       "when": 1759818050199,
       "tag": "0010_flimsy_pete_wisdom",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1759819364845,
+      "tag": "0011_hot_karma",
+      "breakpoints": true
     }
   ]
 }
