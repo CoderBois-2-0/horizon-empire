@@ -1,8 +1,8 @@
 import { cityTable } from "../city/schema.js";
 import { foreignKey, pgTable, varchar } from "drizzle-orm/pg-core";
 
-const resourceInventoryTable = pgTable(
-  "resource_inventories",
+const inventoryTable = pgTable(
+  "inventories",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     cityID: varchar("city_id", { length: 36 })
@@ -17,4 +17,4 @@ const resourceInventoryTable = pgTable(
   ],
 );
 
-export { resourceInventoryTable };
+export { inventoryTable };
