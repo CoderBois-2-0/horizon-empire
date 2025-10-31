@@ -3,7 +3,7 @@ import { placedBuildingTable } from "$db/placedBuilding/schema.js";
 import { relations } from "drizzle-orm";
 
 const occupationTable = pgTable(
-  "occupation",
+  "occupations",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     name: varchar("name", { length: 32 }).notNull(),
