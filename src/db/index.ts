@@ -12,6 +12,7 @@ import * as placedBuildingSchema from "./placedBuilding/schema.js";
 import * as personSchema from "./person/schema.js";
 import * as resourceJunctionSchema from "./resourceJunction/schema.js";
 import * as jobSchema from "./job/schema.js";
+import * as occupationSchema from "./occupation/schema.js";
 
 function connectDB(dbUrl: string) {
   return drizzle(dbUrl, {
@@ -29,6 +30,7 @@ function connectDB(dbUrl: string) {
       ...personSchema,
       ...resourceJunctionSchema,
       ...jobSchema,
+      ...occupationSchema,
     },
   });
 }
