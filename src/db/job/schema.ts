@@ -36,7 +36,7 @@ const jobTable = pgTable(
     foreignKey({
       columns: [table.placedBuildingID],
       foreignColumns: [placedBuildingTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 

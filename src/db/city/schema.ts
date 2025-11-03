@@ -8,23 +8,19 @@ const cityTable = pgTable(
     id: varchar("id", { length: 36 }).primaryKey(),
     name: varchar("name", { length: 32 }).notNull(),
 
-    userID: varchar("user_id", { length: 36 })
-      .notNull()
-      .references(() => userTable.id, { onDelete: "cascade" }),
+    userID: varchar("user_id", { length: 36 }).notNull(),
 
-    mapID: varchar("map_id", { length: 36 })
-      .notNull()
-      .references(() => mapTable.id, { onDelete: "cascade" }),
+    mapID: varchar("map_id", { length: 36 }).notNull(),
   },
   (table) => [
     foreignKey({
       columns: [table.userID],
       foreignColumns: [userTable.id],
-    }),
+    }).onDelete("cascade"),
     foreignKey({
       columns: [table.mapID],
       foreignColumns: [mapTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 
