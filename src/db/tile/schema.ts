@@ -3,7 +3,7 @@ import { regionsTable } from "$db/region/schema.js";
 import { tileType } from "$db/tileType/schema.js";
 
 const tileTable = pgTable(
-  "tile",
+  "tiles",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     type: tileType("type").notNull(),
