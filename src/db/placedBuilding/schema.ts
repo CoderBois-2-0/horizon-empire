@@ -7,23 +7,19 @@ const placedBuildingTable = pgTable(
   "placed_buildings",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
-    buildingID: varchar("building_id", { length: 36 })
-      .notNull()
-      .references(() => buildingTable.id, { onDelete: "cascade" }),
-    cityID: varchar("city_id", { length: 36 })
-      .notNull()
-      .references(() => cityTable.id, { onDelete: "cascade" }),
+    buildingID: varchar("building_id", { length: 36 }).notNull(),
+    cityID: varchar("city_id", { length: 36 }).notNull(),
     buildOnTiles: tileType("build_on_tiles").array().notNull(),
   },
   (table) => [
     foreignKey({
       columns: [table.buildingID],
       foreignColumns: [buildingTable.id],
-    }),
+    }).onDelete("cascade"),
     foreignKey({
       columns: [table.cityID],
       foreignColumns: [cityTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 

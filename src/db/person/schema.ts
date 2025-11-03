@@ -18,15 +18,13 @@ const personTable = pgTable(
     id: varchar("id", { length: 36 }).primaryKey(),
     ageCategory: ageCategory("age_category").notNull(),
     incomeGroup: incomeGroup("income_group").notNull(),
-    housingID: varchar("housing_id", { length: 36 })
-      .notNull()
-      .references(() => placedBuildingTable.id, { onDelete: "cascade" }),
+    housingID: varchar("housing_id", { length: 36 }).notNull(),
   },
   (table) => [
     foreignKey({
       columns: [table.housingID],
       foreignColumns: [placedBuildingTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 
