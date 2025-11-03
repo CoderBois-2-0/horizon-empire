@@ -15,24 +15,24 @@ import * as jobSchema from "./job/schema.js";
 import * as occupationSchema from "./occupation/schema.js";
 
 function connectDB(dbUrl: string) {
-	return drizzle(dbUrl, {
-		schema: {
-			...userSchema,
-			...regionSchema,
-			...mapSchema,
-			...tileTypeSchema,
-			...tileSchema,
-			...citySchema,
-			...buildingSchema,
-			...inventorySchema,
-			...resourceSchema,
-			...placedBuildingSchema,
-			...personSchema,
-			...resourceJunctionSchema,
-			...jobSchema,
-			...occupationSchema,
-		},
-	});
+  return drizzle(dbUrl, {
+    schema: {
+      ...userSchema,
+      ...regionSchema,
+      ...mapSchema,
+      ...tileTypeSchema,
+      ...tileSchema,
+      ...citySchema,
+      ...buildingSchema,
+      ...inventorySchema,
+      ...resourceSchema,
+      ...placedBuildingSchema,
+      ...personSchema,
+      ...resourceJunctionSchema,
+      ...jobSchema,
+      ...occupationSchema,
+    },
+  });
 }
 
 export { connectDB };
