@@ -3,7 +3,7 @@ import { getTableColumns, relations, sql } from "drizzle-orm";
 import { pgTable, foreignKey, varchar, pgView } from "drizzle-orm/pg-core";
 
 const regionsTable = pgTable(
-  "region",
+  "regions",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     name: varchar("name", { length: 32 }).notNull(),
