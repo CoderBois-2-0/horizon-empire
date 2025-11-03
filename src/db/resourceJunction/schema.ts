@@ -6,23 +6,19 @@ const resourceJunctionTable = pgTable(
   "resource_junctions",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
-    resourceID: varchar("resource_id", { length: 36 })
-      .notNull()
-      .references(() => resourceTable.id, { onDelete: "cascade" }),
-    inventoryID: varchar("inventory_id", { length: 36 })
-      .notNull()
-      .references(() => inventoryTable.id, { onDelete: "cascade" }),
+    resourceID: varchar("resource_id", { length: 36 }).notNull(),
+    inventoryID: varchar("inventory_id", { length: 36 }).notNull(),
     quantity: integer("quantity").notNull().default(0),
   },
   (table) => [
     foreignKey({
       columns: [table.resourceID],
       foreignColumns: [resourceTable.id],
-    }),
+    }).onDelete("cascade"),
     foreignKey({
       columns: [table.inventoryID],
       foreignColumns: [inventoryTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 
