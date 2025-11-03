@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/node-postgres";
 import * as mapSchema from "./map/schema.js";
 import * as regionSchema from "./region/schema.js";
 import * as userSchema from "./user/schema.js";
