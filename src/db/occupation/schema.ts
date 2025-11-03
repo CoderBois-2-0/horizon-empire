@@ -7,13 +7,13 @@ const occupationTable = pgTable(
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     name: varchar("name", { length: 32 }).notNull(),
-    placedBuildingID: varchar("placed_building_id", { length: 36 }),
+    placedBuildingID: varchar("placed_building_id", { length: 36 }).notNull(),
   },
   (table) => [
     foreignKey({
       columns: [table.placedBuildingID],
       foreignColumns: [placedBuildingTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 

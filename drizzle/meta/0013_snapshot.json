@@ -1,5 +1,5 @@
 {
-  "id": "7b0a6140-7561-43b6-b70c-53015ae35397",
+  "id": "d432841d-c534-4faf-aa4e-867afd7338b9",
   "prevId": "7a00f71f-ae97-4e65-90c3-ce0d02f29da1",
   "version": "7",
   "dialect": "postgresql",
@@ -225,8 +225,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.occupation": {
-      "name": "occupation",
+    "public.occupations": {
+      "name": "occupations",
       "schema": "",
       "columns": {
         "id": {
@@ -245,18 +245,18 @@
           "name": "placed_building_id",
           "type": "varchar(36)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "occupation_placed_building_id_placed_buildings_id_fk": {
-          "name": "occupation_placed_building_id_placed_buildings_id_fk",
-          "tableFrom": "occupation",
+        "occupations_placed_building_id_placed_buildings_id_fk": {
+          "name": "occupations_placed_building_id_placed_buildings_id_fk",
+          "tableFrom": "occupations",
           "tableTo": "placed_buildings",
           "columnsFrom": ["placed_building_id"],
           "columnsTo": ["id"],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
