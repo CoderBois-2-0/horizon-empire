@@ -3,7 +3,7 @@ import { resourceTable } from "$db/resource/schema.js";
 import { inventoryTable } from "$db/inventory/schema.js";
 
 const resourceJunctionTable = pgTable(
-  "resource_junctions",
+  "inventory_resource_junctions",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     resourceID: varchar("resource_id", { length: 36 }).notNull(),
