@@ -1,0 +1,351 @@
+{
+	"id": "5707c555-14c1-4e61-8441-635d9e63d9ea",
+	"prevId": "eb5f3a83-8291-414a-8ab6-ad1616b172af",
+	"version": "7",
+	"dialect": "postgresql",
+	"tables": {
+		"public.building": {
+			"name": "building",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "varchar(36)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(32)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"resource_cost": {
+					"name": "resource_cost",
+					"type": "real",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"type": {
+					"name": "type",
+					"type": "building_type",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"tiles_used": {
+					"name": "tiles_used",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"max_entities": {
+					"name": "max_entities",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"buildable_on_tiles": {
+					"name": "buildable_on_tiles",
+					"type": "tile_type[]",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.cities": {
+			"name": "cities",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "varchar(36)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(32)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"user_id": {
+					"name": "user_id",
+					"type": "varchar(36)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"map_id": {
+					"name": "map_id",
+					"type": "varchar(36)",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"cities_user_id_users_id_fk": {
+					"name": "cities_user_id_users_id_fk",
+					"tableFrom": "cities",
+					"tableTo": "users",
+					"columnsFrom": [
+						"user_id"
+					],
+					"columnsTo": [
+						"id"
+					],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				},
+				"cities_map_id_map_id_fk": {
+					"name": "cities_map_id_map_id_fk",
+					"tableFrom": "cities",
+					"tableTo": "map",
+					"columnsFrom": [
+						"map_id"
+					],
+					"columnsTo": [
+						"id"
+					],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.map": {
+			"name": "map",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "varchar(36)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"type": {
+					"name": "type",
+					"type": "map_type",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"map_size": {
+					"name": "map_size",
+					"type": "map_size",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"starting_region_id": {
+					"name": "starting_region_id",
+					"type": "varchar(36)",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.region": {
+			"name": "region",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "varchar(36)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(32)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"map_id": {
+					"name": "map_id",
+					"type": "varchar(36)",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"region_map_id_map_id_fk": {
+					"name": "region_map_id_map_id_fk",
+					"tableFrom": "region",
+					"tableTo": "map",
+					"columnsFrom": [
+						"map_id"
+					],
+					"columnsTo": [
+						"id"
+					],
+					"onDelete": "no action",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.tile": {
+			"name": "tile",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "varchar(36)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"type": {
+					"name": "type",
+					"type": "tile_type",
+					"typeSchema": "public",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"region_id": {
+					"name": "region_id",
+					"type": "varchar(36)",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"tile_region_id_region_id_fk": {
+					"name": "tile_region_id_region_id_fk",
+					"tableFrom": "tile",
+					"tableTo": "region",
+					"columnsFrom": [
+						"region_id"
+					],
+					"columnsTo": [
+						"id"
+					],
+					"onDelete": "no action",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.users": {
+			"name": "users",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "varchar(36)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"username": {
+					"name": "username",
+					"type": "varchar(16)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"password": {
+					"name": "password",
+					"type": "varchar(72)",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"users_username_unique": {
+					"name": "users_username_unique",
+					"nullsNotDistinct": false,
+					"columns": [
+						"username"
+					]
+				}
+			},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		}
+	},
+	"enums": {
+		"public.building_type": {
+			"name": "building_type",
+			"schema": "public",
+			"values": [
+				"housing",
+				"work",
+				"service",
+				"educational"
+			]
+		},
+		"public.map_size": {
+			"name": "map_size",
+			"schema": "public",
+			"values": [
+				"small",
+				"medium",
+				"large"
+			]
+		},
+		"public.map_type": {
+			"name": "map_type",
+			"schema": "public",
+			"values": [
+				"forrest",
+				"arctic",
+				"desert",
+				"bay"
+			]
+		},
+		"public.tile_type": {
+			"name": "tile_type",
+			"schema": "public",
+			"values": [
+				"grass",
+				"rock",
+				"water",
+				"snow",
+				"sand",
+				"farmland"
+			]
+		}
+	},
+	"schemas": {},
+	"sequences": {},
+	"roles": {},
+	"policies": {},
+	"views": {},
+	"_meta": {
+		"columns": {},
+		"schemas": {},
+		"tables": {}
+	}
+}

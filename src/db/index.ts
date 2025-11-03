@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/node-postgres";
 import * as mapSchema from "./map/schema.js";
 import * as regionSchema from "./region/schema.js";
 import * as userSchema from "./user/schema.js";
@@ -15,24 +15,24 @@ import * as jobSchema from "./job/schema.js";
 import * as occupationSchema from "./occupation/schema.js";
 
 function connectDB(dbUrl: string) {
-  return drizzle(dbUrl, {
-    schema: {
-      ...userSchema,
-      ...regionSchema,
-      ...mapSchema,
-      ...tileTypeSchema,
-      ...tileSchema,
-      ...citySchema,
-      ...buildingSchema,
-      ...inventorySchema,
-      ...resourceSchema,
-      ...placedBuildingSchema,
-      ...personSchema,
-      ...resourceJunctionSchema,
-      ...jobSchema,
-      ...occupationSchema,
-    },
-  });
+	return drizzle(dbUrl, {
+		schema: {
+			...userSchema,
+			...regionSchema,
+			...mapSchema,
+			...tileTypeSchema,
+			...tileSchema,
+			...citySchema,
+			...buildingSchema,
+			...inventorySchema,
+			...resourceSchema,
+			...placedBuildingSchema,
+			...personSchema,
+			...resourceJunctionSchema,
+			...jobSchema,
+			...occupationSchema,
+		},
+	});
 }
 
 export { connectDB };
