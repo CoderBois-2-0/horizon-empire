@@ -1,6 +1,6 @@
 import { mapTable } from "$db/map/schema.js";
 import { getTableColumns, relations, sql } from "drizzle-orm";
-import { pgTable, foreignKey, varchar, pgView } from "drizzle-orm/pg-core";
+import { pgTable, foreignKey, varchar, boolean, pgView } from "drizzle-orm/pg-core";
 
 const regionsTable = pgTable(
   "regions",
@@ -8,6 +8,7 @@ const regionsTable = pgTable(
     id: varchar("id", { length: 36 }).primaryKey(),
     name: varchar("name", { length: 32 }).notNull(),
     mapID: varchar("map_id", { length: 36 }).notNull(),
+    isUnlocked: boolean("is_unlocked").notNull().default(false),
   },
   (table) => [
     foreignKey({ columns: [table.mapID], foreignColumns: [mapTable.id] }),
