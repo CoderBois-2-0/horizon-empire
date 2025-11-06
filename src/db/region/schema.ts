@@ -1,6 +1,12 @@
 import { mapTable } from "$db/map/schema.js";
 import { getTableColumns, relations, sql } from "drizzle-orm";
-import { pgTable, foreignKey, varchar, boolean, pgView } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  foreignKey,
+  varchar,
+  boolean,
+  pgView,
+} from "drizzle-orm/pg-core";
 
 const regionsTable = pgTable(
   "regions",
