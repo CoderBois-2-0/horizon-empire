@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, real, varchar } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, varchar } from "drizzle-orm/pg-core";
 import { tileType } from "$db/tileType/schema.js";
 
 const buildingType = pgEnum("building_type", [
