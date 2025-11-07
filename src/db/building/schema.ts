@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, real, varchar } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, varchar } from "drizzle-orm/pg-core";
 import { tileType } from "$db/tileType/schema.js";
 
 const buildingType = pgEnum("building_type", [
@@ -11,7 +11,6 @@ const buildingType = pgEnum("building_type", [
 const buildingTable = pgTable("building", {
   id: varchar("id", { length: 36 }).primaryKey(),
   name: varchar("name", { length: 32 }).notNull(),
-  resourceCost: real("resource_cost").notNull(),
   buildingType: buildingType("type").notNull(),
   tilesUsed: integer("tiles_used").notNull(),
   maxEntities: integer("max_entities").notNull(),
