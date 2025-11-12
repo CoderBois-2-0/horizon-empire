@@ -6,8 +6,9 @@
     "db:migrate": "drizzle-kit migrate",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.4",
@@ -29,6 +30,7 @@
     "prettier": "^3.6.2",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.44.1"
+    "typescript-eslint": "^8.44.1",
+    "wrangler": "^4.46.0"
   }
 }
