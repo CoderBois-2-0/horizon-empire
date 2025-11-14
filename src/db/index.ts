@@ -14,6 +14,10 @@ import * as resourceJunctionSchema from "./resourceJunction/schema.js";
 import * as jobSchema from "./job/schema.js";
 import * as occupationSchema from "./occupation/schema.js";
 
+function generateID() {
+	return crypto.randomUUID();
+}
+
 function connectDB(dbUrl: string) {
 	return drizzle(dbUrl, {
 		schema: {
@@ -35,6 +39,6 @@ function connectDB(dbUrl: string) {
 	});
 }
 
-type TDB = ReturnType<typeof connectDB>
+type TDB = ReturnType<typeof connectDB>;
 
-export { connectDB, TDB };
+export { connectDB, generateID, TDB };

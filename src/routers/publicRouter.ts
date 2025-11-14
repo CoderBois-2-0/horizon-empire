@@ -1,7 +1,6 @@
 import { createRouter } from "./index";
-import authRouter from "./authRouter/index"
+import authRouter from "./authRouter/index";
 
-const router = createRouter()
-	.route("/auth", authRouter);
+const router = createRouter().route("/auth", authRouter);
 
 export default router;
