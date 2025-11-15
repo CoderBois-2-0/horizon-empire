@@ -22,6 +22,7 @@ class UserHandler {
       .returning();
 
     const user = userRows.at(0) as TUser;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...safeUser } = user;
 
     return safeUser;
@@ -43,6 +44,7 @@ class UserHandler {
       return userOptional;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...safeUser } = userOptional;
 
     return safeUser;
