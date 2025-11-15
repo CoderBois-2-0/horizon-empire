@@ -4,34 +4,49 @@ import { userTable } from "./schema";
 import { TSafeUser, TUser, TUserInsert } from "./types";
 
 class UserHandler {
-	#client: TDB;
-	#table = userTable;
+  #client: TDB;
+  #table = userTable;
 
-	constructor(dbUrl: string) {
-		const db = connectDB(dbUrl);
-		this.#client = db;
-	}
+  constructor(dbUrl: string) {
+    const db = connectDB(dbUrl);
+    this.#client = db;
+  }
 
-	async create(newUser: TUserInsert) {
-		await this.#client.insert(this.#table).values({ ...newUser, password: sql`crypt(${newUser.password}, gen_salt('bf', 12))` });
-	}
+  async create(newUser: TUserInsert): Promise<TSafeUser> {
+    const userRows = await this.#client
+      .insert(this.#table)
+      .values({
+        ...newUser,
+        password: sql`crypt(${newUser.password}, gen_salt('bf', 12))`,
+      })
+      .returning();
 
-	async findByUsername(
-		username: TUser["username"],
-		hashedPassword: TUser["password"],
-	): Promise<TSafeUser | undefined> {
-		const userOptional = await this.#client.query.userTable.findFirst({
-			where: (user, { and, eq }) =>
-				and(eq(user.username, username), eq(user.password, hashedPassword)),
-		});
+    const user = userRows.at(0) as TUser;
+    const { password: _, ...safeUser } = user;
 
-		if (!userOptional) {
-			return userOptional;
-		}
-		const { password, ...user } = userOptional;
+    return safeUser;
+  }
 
-		return user;
-	}
+  async findByUsername(
+    username: TUser["username"],
+    password: TUser["password"],
+  ): Promise<TSafeUser | undefined> {
+    const userOptional = await this.#client.query.userTable.findFirst({
+      where: (user, { and, eq }) =>
+        and(
+          eq(user.username, username),
+          sql`"password" = crypt(${password}, "password")`,
+        ),
+    });
+
+    if (!userOptional) {
+      return userOptional;
+    }
+
+    const { password: _, ...safeUser } = userOptional;
+
+    return safeUser;
+  }
 }
 
 export { UserHandler };
