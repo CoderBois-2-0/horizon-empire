@@ -13,6 +13,7 @@ import * as personSchema from "./person/schema.js";
 import * as resourceJunctionSchema from "./resourceJunction/schema.js";
 import * as jobSchema from "./job/schema.js";
 import * as occupationSchema from "./occupation/schema.js";
+import * as regionResourceCostSchema from "./regionResourceCost/schema.js";
 import * as buildingResourceCostSchema from "./buildingResourceCost/schema.js";
 
 function generateID() {
@@ -36,6 +37,7 @@ function connectDB(dbUrl: string) {
       ...resourceJunctionSchema,
       ...jobSchema,
       ...occupationSchema,
+      ...regionResourceCostSchema,
       ...buildingResourceCostSchema,
     },
   });
