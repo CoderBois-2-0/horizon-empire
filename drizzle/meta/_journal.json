@@ -127,6 +127,13 @@
       "when": 1762472036011,
       "tag": "0017_lonely_exodus",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1763452569966,
+      "tag": "0018_cheerful_galactus",
+      "breakpoints": true
     }
   ]
 }

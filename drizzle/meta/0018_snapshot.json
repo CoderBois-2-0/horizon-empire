@@ -1,6 +1,6 @@
 {
-  "id": "9c2e3b64-cdc4-4196-ab4f-b4fd31f01969",
-  "prevId": "c88282f3-afbd-49d0-954f-c8926b3b2c9c",
+  "id": "9e23dd3c-1b97-4639-951e-1a2d0d953a11",
+  "prevId": "9c2e3b64-cdc4-4196-ab4f-b4fd31f01969",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -17,12 +17,6 @@
         "name": {
           "name": "name",
           "type": "varchar(32)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "resource_cost": {
-          "name": "resource_cost",
-          "type": "real",
           "primaryKey": false,
           "notNull": true
         },
@@ -65,6 +59,12 @@
       "name": "building_resource_cost",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
         "building_id": {
           "name": "building_id",
           "type": "varchar(36)",
@@ -92,7 +92,7 @@
           "tableTo": "building",
           "columnsFrom": ["building_id"],
           "columnsTo": ["id"],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         },
         "building_resource_cost_resource_id_resources_id_fk": {
@@ -101,7 +101,7 @@
           "tableTo": "resources",
           "columnsFrom": ["resource_id"],
           "columnsTo": ["id"],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -299,12 +299,6 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
-        },
-        "starting_region_id": {
-          "name": "starting_region_id",
-          "type": "varchar(36)",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -483,6 +477,13 @@
           "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true
+        },
+        "is_unlocked": {
+          "name": "is_unlocked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},
@@ -498,6 +499,67 @@
         }
       },
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.region_resource_cost": {
+      "name": "region_resource_cost",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "region_id": {
+          "name": "region_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "region_resource_cost_region_id_regions_id_fk": {
+          "name": "region_resource_cost_region_id_regions_id_fk",
+          "tableFrom": "region_resource_cost",
+          "tableTo": "regions",
+          "columnsFrom": ["region_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "region_resource_cost_resource_id_resources_id_fk": {
+          "name": "region_resource_cost_resource_id_resources_id_fk",
+          "tableFrom": "region_resource_cost",
+          "tableTo": "resources",
+          "columnsFrom": ["resource_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "region_resource_cost_region_id_resource_id_pk": {
+          "name": "region_resource_cost_region_id_resource_id_pk",
+          "columns": ["region_id", "resource_id"]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -734,9 +796,16 @@
           "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true
+        },
+        "is_unlocked": {
+          "name": "is_unlocked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
-      "definition": "select \"id\", \"name\", \"map_id\", total_region_tiles(\"id\") as \"total_tiles\" from \"regions\"",
+      "definition": "select \"id\", \"name\", \"map_id\", \"is_unlocked\", total_region_tiles(\"id\") as \"total_tiles\" from \"regions\"",
       "name": "region_with_total_tiles",
       "schema": "public",
       "isExisting": false,
