@@ -20,11 +20,11 @@ const buildingResourceCostTable = pgTable(
     foreignKey({
       columns: [table.buildingID],
       foreignColumns: [buildingTable.id],
-    }).onDelete("cascade"),
+    }),
     foreignKey({
       columns: [table.resourceID],
       foreignColumns: [resourceTable.id],
-    }).onDelete("cascade"),
+    }),
   ],
 );
 export { buildingResourceCostTable };
