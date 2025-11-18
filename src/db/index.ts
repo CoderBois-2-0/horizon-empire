@@ -13,6 +13,12 @@ import * as personSchema from "./person/schema.js";
 import * as resourceJunctionSchema from "./resourceJunction/schema.js";
 import * as jobSchema from "./job/schema.js";
 import * as occupationSchema from "./occupation/schema.js";
+import * as regionResourceCostSchema from "./regionResourceCost/schema.js";
+import * as buildingResourceCostSchema from "./buildingResourceCost/schema.js";
+
+function generateID() {
+  return crypto.randomUUID();
+}
 
 function connectDB(dbUrl: string) {
   return drizzle(dbUrl, {
@@ -31,8 +37,12 @@ function connectDB(dbUrl: string) {
       ...resourceJunctionSchema,
       ...jobSchema,
       ...occupationSchema,
+      ...regionResourceCostSchema,
+      ...buildingResourceCostSchema,
     },
   });
 }
 
-export { connectDB };
+type TDB = ReturnType<typeof connectDB>;
+
+export { connectDB, generateID, TDB };
