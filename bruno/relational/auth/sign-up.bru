@@ -1,0 +1,28 @@
+meta {
+  name: sign-up
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{path}}/sign-up
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "doro-hd",
+    "password": "adminAdmin",
+    "confirm-password": "adminAdmin"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

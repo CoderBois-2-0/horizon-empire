@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "name": "horizon-empire",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"],
+  "size": 0.00041103363037109375,
+  "filesCount": 3,
+  "presets": {
+    "requestType": "http",
+    "requestUrl": "{{baseUrl}}/{{path}}"
+  }
+}

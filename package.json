@@ -11,16 +11,19 @@
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
-    "@hono/node-server": "^1.19.4",
-    "dotenv": "^17.2.2",
+    "@hono/zod-validator": "^0.7.4",
     "drizzle-orm": "^0.44.5",
+    "drizzle-zod": "^0.8.3",
     "hono": "^4.9.8",
     "jiti": "^2.6.0",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^20.11.17",
+    "@usebruno/cli": "^2.14.2",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
