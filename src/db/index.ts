@@ -15,6 +15,7 @@ import * as jobSchema from "./job/schema.js";
 import * as occupationSchema from "./occupation/schema.js";
 import * as regionResourceCostSchema from "./regionResourceCost/schema.js";
 import * as buildingResourceCostSchema from "./buildingResourceCost/schema.js";
+import * as auditPlacedBuildingSchema from "./auditPlacedBuilding/schema.js";
 
 function generateID() {
   return crypto.randomUUID();
@@ -39,6 +40,7 @@ function connectDB(dbUrl: string) {
       ...occupationSchema,
       ...regionResourceCostSchema,
       ...buildingResourceCostSchema,
+      ...auditPlacedBuildingSchema,
     },
   });
 }
