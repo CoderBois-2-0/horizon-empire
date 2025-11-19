@@ -19,7 +19,7 @@ const auditPlacedBuildingTable = pgTable(
   {
     id: varchar("id", { length: 36 }).notNull(),
     userId: varchar("user_id", { length: 36 }).notNull(),
-    placedBuildingID: varchar("placed_building_id", { length: 36 }).notNull(),
+    buildingID: varchar("building_id", { length: 36 }).notNull(),
     actionType: placedBuildingActionType("action_type"),
     created: timestamp().notNull().defaultNow(),
   },
@@ -27,7 +27,7 @@ const auditPlacedBuildingTable = pgTable(
     primaryKey({ columns: [table.id] }),
     foreignKey({ columns: [table.userId], foreignColumns: [userTable.id] }),
     foreignKey({
-      columns: [table.placedBuildingID],
+      columns: [table.buildingID],
       foreignColumns: [placedBuildingTable.id],
     }),
   ],
