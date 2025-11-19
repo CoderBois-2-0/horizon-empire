@@ -1,9 +1,88 @@
 {
-  "id": "9e23dd3c-1b97-4639-951e-1a2d0d953a11",
+  "id": "c187dfe6-7315-4977-857e-d5cb04a28bdf",
   "prevId": "9c2e3b64-cdc4-4196-ab4f-b4fd31f01969",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.audit_placed_building": {
+      "name": "audit_placed_building",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "placed_building_id": {
+          "name": "placed_building_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action_type": {
+          "name": "action_type",
+          "type": "placed_building_action_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created": {
+          "name": "created",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "audit_placed_building_user_id_users_id_fk": {
+          "name": "audit_placed_building_user_id_users_id_fk",
+          "tableFrom": "audit_placed_building",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "audit_placed_building_placed_building_id_placed_buildings_id_fk": {
+          "name": "audit_placed_building_placed_building_id_placed_buildings_id_fk",
+          "tableFrom": "audit_placed_building",
+          "tableTo": "placed_buildings",
+          "columnsFrom": [
+            "placed_building_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "audit_placed_building_id_pk": {
+          "name": "audit_placed_building_id_pk",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.building": {
       "name": "building",
       "schema": "",
@@ -62,8 +141,8 @@
         "id": {
           "name": "id",
           "type": "varchar(36)",
-          "primaryKey": true,
-          "notNull": true
+          "primaryKey": false,
+          "notNull": false
         },
         "building_id": {
           "name": "building_id",
@@ -90,8 +169,12 @@
           "name": "building_resource_cost_building_id_building_id_fk",
           "tableFrom": "building_resource_cost",
           "tableTo": "building",
-          "columnsFrom": ["building_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "building_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -99,16 +182,22 @@
           "name": "building_resource_cost_resource_id_resources_id_fk",
           "tableFrom": "building_resource_cost",
           "tableTo": "resources",
-          "columnsFrom": ["resource_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "resource_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
-        "building_resource_cost_building_id_resource_id_pk": {
-          "name": "building_resource_cost_building_id_resource_id_pk",
-          "columns": ["building_id", "resource_id"]
+        "building_resource_cost_id_pk": {
+          "name": "building_resource_cost_id_pk",
+          "columns": [
+            "id"
+          ]
         }
       },
       "uniqueConstraints": {},
@@ -151,8 +240,12 @@
           "name": "cities_user_id_users_id_fk",
           "tableFrom": "cities",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -160,8 +253,12 @@
           "name": "cities_map_id_maps_id_fk",
           "tableFrom": "cities",
           "tableTo": "maps",
-          "columnsFrom": ["map_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "map_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -195,8 +292,12 @@
           "name": "inventories_city_id_cities_id_fk",
           "tableFrom": "inventories",
           "tableTo": "cities",
-          "columnsFrom": ["city_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "city_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -255,8 +356,12 @@
           "name": "jobs_person_id_persons_id_fk",
           "tableFrom": "jobs",
           "tableTo": "persons",
-          "columnsFrom": ["person_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "person_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -264,8 +369,12 @@
           "name": "jobs_placed_building_id_placed_buildings_id_fk",
           "tableFrom": "jobs",
           "tableTo": "placed_buildings",
-          "columnsFrom": ["placed_building_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "placed_building_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -338,8 +447,12 @@
           "name": "occupations_placed_building_id_placed_buildings_id_fk",
           "tableFrom": "occupations",
           "tableTo": "placed_buildings",
-          "columnsFrom": ["placed_building_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "placed_building_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -387,8 +500,12 @@
           "name": "persons_housing_id_placed_buildings_id_fk",
           "tableFrom": "persons",
           "tableTo": "placed_buildings",
-          "columnsFrom": ["housing_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "housing_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -435,8 +552,12 @@
           "name": "placed_buildings_building_id_building_id_fk",
           "tableFrom": "placed_buildings",
           "tableTo": "building",
-          "columnsFrom": ["building_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "building_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -444,8 +565,12 @@
           "name": "placed_buildings_city_id_cities_id_fk",
           "tableFrom": "placed_buildings",
           "tableTo": "cities",
-          "columnsFrom": ["city_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "city_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -492,8 +617,12 @@
           "name": "regions_map_id_maps_id_fk",
           "tableFrom": "regions",
           "tableTo": "maps",
-          "columnsFrom": ["map_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "map_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -539,8 +668,12 @@
           "name": "region_resource_cost_region_id_regions_id_fk",
           "tableFrom": "region_resource_cost",
           "tableTo": "regions",
-          "columnsFrom": ["region_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "region_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -548,16 +681,22 @@
           "name": "region_resource_cost_resource_id_resources_id_fk",
           "tableFrom": "region_resource_cost",
           "tableTo": "resources",
-          "columnsFrom": ["resource_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "resource_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
-        "region_resource_cost_region_id_resource_id_pk": {
-          "name": "region_resource_cost_region_id_resource_id_pk",
-          "columns": ["region_id", "resource_id"]
+        "region_resource_cost_id_pk": {
+          "name": "region_resource_cost_id_pk",
+          "columns": [
+            "id"
+          ]
         }
       },
       "uniqueConstraints": {},
@@ -626,8 +765,12 @@
           "name": "inventory_resource_junctions_resource_id_resources_id_fk",
           "tableFrom": "inventory_resource_junctions",
           "tableTo": "resources",
-          "columnsFrom": ["resource_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "resource_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -635,8 +778,12 @@
           "name": "inventory_resource_junctions_inventory_id_inventories_id_fk",
           "tableFrom": "inventory_resource_junctions",
           "tableTo": "inventories",
-          "columnsFrom": ["inventory_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "inventory_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -677,8 +824,12 @@
           "name": "tiles_region_id_regions_id_fk",
           "tableFrom": "tiles",
           "tableTo": "regions",
-          "columnsFrom": ["region_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "region_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -719,7 +870,9 @@
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": ["username"]
+          "columns": [
+            "username"
+          ]
         }
       },
       "policies": {},
@@ -728,10 +881,23 @@
     }
   },
   "enums": {
+    "public.placed_building_action_type": {
+      "name": "placed_building_action_type",
+      "schema": "public",
+      "values": [
+        "create",
+        "remove"
+      ]
+    },
     "public.building_type": {
       "name": "building_type",
       "schema": "public",
-      "values": ["housing", "work", "service", "educational"]
+      "values": [
+        "housing",
+        "work",
+        "service",
+        "educational"
+      ]
     },
     "public.job_type": {
       "name": "job_type",
@@ -749,27 +915,54 @@
     "public.map_size": {
       "name": "map_size",
       "schema": "public",
-      "values": ["small", "medium", "large"]
+      "values": [
+        "small",
+        "medium",
+        "large"
+      ]
     },
     "public.map_type": {
       "name": "map_type",
       "schema": "public",
-      "values": ["forrest", "arctic", "desert", "bay"]
+      "values": [
+        "forrest",
+        "arctic",
+        "desert",
+        "bay"
+      ]
     },
     "public.age_category": {
       "name": "age_category",
       "schema": "public",
-      "values": ["newborn", "child", "teen", "young adult", "adult", "senior"]
+      "values": [
+        "newborn",
+        "child",
+        "teen",
+        "young adult",
+        "adult",
+        "senior"
+      ]
     },
     "public.income_group": {
       "name": "income_group",
       "schema": "public",
-      "values": ["low", "medium", "high"]
+      "values": [
+        "low",
+        "medium",
+        "high"
+      ]
     },
     "public.tile_type": {
       "name": "tile_type",
       "schema": "public",
-      "values": ["grass", "rock", "water", "snow", "sand", "farmland"]
+      "values": [
+        "grass",
+        "rock",
+        "water",
+        "snow",
+        "sand",
+        "farmland"
+      ]
     }
   },
   "schemas": {},

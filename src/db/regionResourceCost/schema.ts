@@ -17,7 +17,7 @@ const regionResourceCostTable = pgTable(
     amount: integer("amount").notNull(),
   },
   (table) => [
-    primaryKey({ columns: [table.regionID, table.resourceID] }),
+    primaryKey({ columns: [table.id] }),
     foreignKey({
       columns: [table.regionID],
       foreignColumns: [regionsTable.id],

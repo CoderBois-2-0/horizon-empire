@@ -11,13 +11,13 @@ import { resourceTable } from "$db/resource/schema.js";
 const buildingResourceCostTable = pgTable(
   "building_resource_cost",
   {
-    id: varchar("id", { length: 36 }).primaryKey(),
+    id: varchar("id", { length: 36 }),
     buildingID: varchar("building_id", { length: 36 }).notNull(),
     resourceID: varchar("resource_id", { length: 36 }).notNull(),
     amount: integer("amount").notNull(),
   },
   (table) => [
-    primaryKey({ columns: [table.buildingID, table.resourceID] }),
+    primaryKey({ columns: [table.id] }),
     foreignKey({
       columns: [table.buildingID],
       foreignColumns: [buildingTable.id],
