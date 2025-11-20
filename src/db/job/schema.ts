@@ -45,7 +45,7 @@ const jobTable = pgTable(
 
     // index for finding unoccupied jobs
     index("idx_jobs_unoccupied").on(table.id).where(isNull(table.personID)),
-  ]
+  ],
 );
 
 export { jobType, jobTable };
