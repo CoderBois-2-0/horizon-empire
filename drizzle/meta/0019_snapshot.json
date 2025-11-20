@@ -1,6 +1,6 @@
 {
-  "id": "c187dfe6-7315-4977-857e-d5cb04a28bdf",
-  "prevId": "9c2e3b64-cdc4-4196-ab4f-b4fd31f01969",
+  "id": "f22edf0a-a98d-4d9e-9fa5-2cb5ec942449",
+  "prevId": "c187dfe6-7315-4977-857e-d5cb04a28bdf",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -20,8 +20,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "placed_building_id": {
-          "name": "placed_building_id",
+        "building_id": {
+          "name": "building_id",
           "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true
@@ -56,12 +56,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "audit_placed_building_placed_building_id_placed_buildings_id_fk": {
-          "name": "audit_placed_building_placed_building_id_placed_buildings_id_fk",
+        "audit_placed_building_building_id_placed_buildings_id_fk": {
+          "name": "audit_placed_building_building_id_placed_buildings_id_fk",
           "tableFrom": "audit_placed_building",
           "tableTo": "placed_buildings",
           "columnsFrom": [
-            "placed_building_id"
+            "building_id"
           ],
           "columnsTo": [
             "id"
