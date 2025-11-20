@@ -8,7 +8,7 @@ import {
   foreignKey,
   index,
 } from "drizzle-orm/pg-core";
-import { eq } from "drizzle-orm";
+import { isNull } from "drizzle-orm";
 
 const jobType = pgEnum("job_type", [
   "office",
@@ -44,8 +44,8 @@ const jobTable = pgTable(
     index("idx_jobs_person_id").on(table.personID),
 
     // index for finding unoccupied jobs
-    index("idx_jobs_unoccupied").on(table.id).where(eq(table.personID, null)),
-  ],
+    index("idx_jobs_unoccupied").on(table.id).where(isNull(table.personID)),
+  ]
 );
 
 export { jobType, jobTable };
