@@ -1,6 +1,6 @@
 {
-  "id": "f22edf0a-a98d-4d9e-9fa5-2cb5ec942449",
-  "prevId": "c187dfe6-7315-4977-857e-d5cb04a28bdf",
+  "id": "340cb0ed-f670-4a8d-944d-294b085acc95",
+  "prevId": "f22edf0a-a98d-4d9e-9fa5-2cb5ec942449",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -315,10 +315,42 @@
           "name": "placed_building_id",
           "type": "varchar(36)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_jobs_person_id": {
+          "name": "idx_jobs_person_id",
+          "columns": [
+            {
+              "expression": "person_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_jobs_unoccupied": {
+          "name": "idx_jobs_unoccupied",
+          "columns": [
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"jobs\".\"person_id\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "jobs_person_id_persons_id_fk": {
           "name": "jobs_person_id_persons_id_fk",

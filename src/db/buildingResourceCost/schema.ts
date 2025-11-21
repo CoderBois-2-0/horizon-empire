@@ -9,7 +9,7 @@ import { buildingTable } from "$db/building/schema.js";
 import { resourceTable } from "$db/resource/schema.js";
 
 const buildingResourceCostTable = pgTable(
-  "building_resource_cost",
+  "building_resource_costs",
   {
     id: varchar("id", { length: 36 }),
     buildingID: varchar("building_id", { length: 36 }).notNull(),

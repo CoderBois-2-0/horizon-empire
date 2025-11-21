@@ -9,7 +9,7 @@ import { regionsTable } from "$db/region/schema.js";
 import { resourceTable } from "$db/resource/schema.js";
 
 const regionResourceCostTable = pgTable(
-  "region_resource_cost",
+  "region_resource_costs",
   {
     id: varchar("id", { length: 36 }).notNull(),
     regionID: varchar("region_id", { length: 36 }).notNull(),
