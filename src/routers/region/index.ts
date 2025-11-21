@@ -15,4 +15,16 @@ regionRouter.get("/region", regionQueryValidator, async (c: TContext<IEnv>) => {
   }
 });
 
+regionRouter.put("/region/:regionID/unlock", async (c: TContext<IEnv>) => {
+  try {
+    const { regionID } = c.req.param();
+    const handler = new RegionHandler(process.env.DB_URL!);
+
+    await handler.unlockRegion(regionID);
+    return c.json({ message: "Region unlocked successfully" });
+  } catch {
+    return c.json({ error: "Failed to unlock region" }, 500);
+  }
+});
+
 export { regionRouter };

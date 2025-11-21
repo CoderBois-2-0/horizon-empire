@@ -7,3 +7,7 @@ export interface IRegionQuery {
   mapID?: string;
   isUnlocked?: boolean;
 }
+
+export interface IRegionUpdate {
+  isUnlocked?: boolean;
+}
