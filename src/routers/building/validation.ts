@@ -9,6 +9,6 @@ const buildingQuerySchema = z
 
 const buildingQueryValidator = (data: unknown) => {
   return buildingQuerySchema.parse(data);
-}
+};
 
 export { buildingQueryValidator };
