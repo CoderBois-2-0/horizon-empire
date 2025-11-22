@@ -17,7 +17,10 @@ const regionsTable = pgTable(
     isUnlocked: boolean("is_unlocked").notNull().default(false),
   },
   (table) => [
-    foreignKey({ columns: [table.mapID], foreignColumns: [mapTable.id] }),
+    foreignKey({
+      columns: [table.mapID],
+      foreignColumns: [mapTable.id],
+    }).onDelete("cascade"),
   ],
 );
 

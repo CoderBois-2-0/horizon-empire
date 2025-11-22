@@ -1,6 +1,7 @@
 import { pgTable, varchar, foreignKey } from "drizzle-orm/pg-core";
 import { regionsTable } from "$db/region/schema.js";
 import { tileType } from "$db/tileType/schema.js";
+import { relations } from "drizzle-orm";
 
 const tileTable = pgTable(
   "tiles",
@@ -13,8 +14,15 @@ const tileTable = pgTable(
     foreignKey({
       columns: [table.regionID],
       foreignColumns: [regionsTable.id],
-    }),
+    }).onDelete("cascade"),
   ],
 );
 
-export { tileTable };
+const tileRelations = relations(tileTable, ({ one }) => ({
+  region: one(regionsTable, {
+    fields: [tileTable.regionID],
+    references: [regionsTable.id],
+  }),
+}));
+
+export { tileTable, tileRelations };
