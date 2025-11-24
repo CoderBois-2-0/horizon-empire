@@ -1,5 +1,6 @@
 import { connectDB, TDB } from "$db/index";
-import { IRegion } from "./types";
+import { IRegion, IRegionQuery } from "./types";
+import { eq } from "drizzle-orm";
 
 class RegionHandler {
   #client: TDB;
@@ -10,8 +11,12 @@ class RegionHandler {
   }
 
   // get all regions
-  async getAll(): Promise<IRegion[]> {
-    return await this.#client.query.regionsTable.findMany();
+  async getAll(query?: IRegionQuery): Promise<IRegion[]> {
+    return this.#client.query.regionsTable.findMany({
+      where: query?.mapID
+        ? (fields) => eq(fields.mapID, query.mapID!)
+        : undefined,
+    });
   }
 }
 
