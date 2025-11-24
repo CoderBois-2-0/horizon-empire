@@ -7,7 +7,7 @@ const buildingType = pgEnum("building_type", [
   "educational",
 ]);
 
-const buildingTable = pgTable("building", {
+const buildingTable = pgTable("buildings", {
   id: varchar("id", { length: 36 }).primaryKey(),
   name: varchar("name", { length: 32 }).notNull(),
   buildingType: buildingType("type").notNull(),

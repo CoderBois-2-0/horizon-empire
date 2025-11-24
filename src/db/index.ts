@@ -10,12 +10,12 @@ import * as inventorySchema from "./inventory/schema.js";
 import * as resourceSchema from "./resource/schema.js";
 import * as placedBuildingSchema from "./placedBuilding/schema.js";
 import * as personSchema from "./person/schema.js";
-import * as resourceJunctionSchema from "./resourceJunction/schema.js";
+import * as inventoryResourceSchema from "./inventoryResource/schema.js";
 import * as jobSchema from "./job/schema.js";
-import * as occupationSchema from "./occupation/schema.js";
 import * as regionResourceCostSchema from "./regionResourceCost/schema.js";
 import * as buildingResourceCostSchema from "./buildingResourceCost/schema.js";
 import * as auditPlacedBuildingSchema from "./auditPlacedBuilding/schema.js";
+import * as incomeGroupSchema from "./incomeGroup/schema.js";
 import * as buildingTileTypeSchema from "./buildingTileType/schema.js";
 import * as placedBuildingTileTypeSchema from "./placedBuildingTileType/schema.js"
 
@@ -37,12 +37,12 @@ function connectDB(dbUrl: string) {
       ...resourceSchema,
       ...placedBuildingSchema,
       ...personSchema,
-      ...resourceJunctionSchema,
+      ...inventoryResourceSchema,
       ...jobSchema,
-      ...occupationSchema,
       ...regionResourceCostSchema,
       ...buildingResourceCostSchema,
       ...auditPlacedBuildingSchema,
+      ...incomeGroupSchema,
       ...placedBuildingTileTypeSchema,
       ...buildingTileTypeSchema,
     },
