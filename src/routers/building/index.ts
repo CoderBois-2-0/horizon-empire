@@ -4,15 +4,12 @@ import { IBuilding } from "$db/building/types";
 
 const buildingRouter = createRouter();
 
-buildingRouter.get(
-  "/buildings",
-  async (c: TContext<IEnv>) => {
-    const buildingHandler = new BuildingHandler(c.env.DB_URL);
+buildingRouter.get("/buildings", async (c: TContext<IEnv>) => {
+  const buildingHandler = new BuildingHandler(c.env.DB_URL);
 
-    const buildings: IBuilding[] = await buildingHandler.getAll();
+  const buildings: IBuilding[] = await buildingHandler.getAll();
 
-    return c.json({ buildings });
-  },
-);
+  return c.json({ buildings });
+});
 
 export { buildingRouter };
