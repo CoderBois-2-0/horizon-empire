@@ -141,6 +141,13 @@
       "when": 1763546876937,
       "tag": "0019_sloppy_ezekiel",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1763734922767,
+      "tag": "0020_omniscient_living_lightning",
+      "breakpoints": true
     }
   ]
 }
