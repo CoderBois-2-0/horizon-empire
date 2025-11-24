@@ -2,6 +2,7 @@ import { pgTable, varchar, foreignKey } from "drizzle-orm/pg-core";
 import { tileType } from "$db/tileType/schema.js";
 import { buildingTable } from "$db/building/schema.js";
 import { cityTable } from "$db/city/schema.js";
+import { regionsTable } from "$db/region/schema";
 
 const placedBuildingTable = pgTable(
   "placed_buildings",
@@ -9,6 +10,7 @@ const placedBuildingTable = pgTable(
     id: varchar("id", { length: 36 }).primaryKey(),
     buildingID: varchar("building_id", { length: 36 }).notNull(),
     cityID: varchar("city_id", { length: 36 }).notNull(),
+    regionID: varchar("region_id", { length: 36 }).notNull(),
     buildOnTiles: tileType("build_on_tiles").array().notNull(),
   },
   (table) => [
@@ -19,6 +21,10 @@ const placedBuildingTable = pgTable(
     foreignKey({
       columns: [table.cityID],
       foreignColumns: [cityTable.id],
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.regionID],
+      foreignColumns: [regionsTable.id],
     }).onDelete("cascade"),
   ],
 );
