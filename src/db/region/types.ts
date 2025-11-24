@@ -8,4 +8,5 @@ export interface IRegionQuery {
 
 export interface IRegionUpdate {
   isUnlocked?: boolean;
+  inventoryID?: string;
 }

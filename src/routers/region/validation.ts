@@ -9,10 +9,11 @@ export const regionQuerySchema = z
 
 export const regionQueryValidator = zValidator("query", regionQuerySchema);
 
-export const regionPutSchema = z
+export const regionUnlockSchema = z
   .object({
-    isUnlocked: z.boolean().optional(),
+    isUnlocked: z.boolean(),
+    inventoryID: z.string(),
   })
   .strict();
 
-export const regionPutValidator = zValidator("json", regionPutSchema);
+export const regionUnlockValidator = zValidator("json", regionUnlockSchema);
