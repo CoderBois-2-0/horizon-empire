@@ -18,7 +18,7 @@ const buildingTileTypeTable = pgTable(
       columns: [table.buildingID],
       foreignColumns: [buildingTable.id],
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
-export { buildingTileTypeTable }
+export { buildingTileTypeTable };

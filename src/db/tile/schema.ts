@@ -17,7 +17,7 @@ const tileTable = pgTable(
     foreignKey({
       columns: [table.tileTypeID],
       foreignColumns: [tileTypeTable.id],
-    }).onDelete("cascade")
+    }).onDelete("cascade"),
   ],
 );
 
