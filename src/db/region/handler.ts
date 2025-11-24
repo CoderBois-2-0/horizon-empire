@@ -28,7 +28,7 @@ class RegionHandler {
       return true;
     }
 
-    // do payment logic 
+    // do payment logic
     const hasPaid = await paymentFunction(inventoryID, regionID);
     if (hasPaid) {
       return true;
