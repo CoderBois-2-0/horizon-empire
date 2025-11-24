@@ -15,7 +15,7 @@ import * as jobSchema from "./job/schema.js";
 import * as regionResourceCostSchema from "./regionResourceCost/schema.js";
 import * as buildingResourceCostSchema from "./buildingResourceCost/schema.js";
 import * as auditPlacedBuildingSchema from "./auditPlacedBuilding/schema.js";
-import * as incomeGroupSchema from "./incomeGroup/schme.js";
+import * as incomeGroupSchema from "./incomeGroup/schema.js";
 
 function generateID() {
   return crypto.randomUUID();
