@@ -16,6 +16,8 @@ import * as regionResourceCostSchema from "./regionResourceCost/schema.js";
 import * as buildingResourceCostSchema from "./buildingResourceCost/schema.js";
 import * as auditPlacedBuildingSchema from "./auditPlacedBuilding/schema.js";
 import * as incomeGroupSchema from "./incomeGroup/schema.js";
+import * as buildingTileTypeSchema from "./buildingTileType/schema.js";
+import * as placedBuildingTileTypeSchema from "./placedBuildingTileType/schema.js";
 
 function generateID() {
   return crypto.randomUUID();
@@ -41,6 +43,8 @@ function connectDB(dbUrl: string) {
       ...buildingResourceCostSchema,
       ...auditPlacedBuildingSchema,
       ...incomeGroupSchema,
+      ...placedBuildingTileTypeSchema,
+      ...buildingTileTypeSchema,
     },
   });
 }
