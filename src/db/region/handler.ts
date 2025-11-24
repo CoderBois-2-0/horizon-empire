@@ -16,8 +16,31 @@ class RegionHandler {
     return await this.#client.query.regionsTable.findMany();
   }
 
-  // update isUnlocked status for a given region ID
-  async unlockRegion(regionID: string): Promise<void> {
+  async allRegionsLocked(): Promise<boolean> {
+    const regions = await this.#client.query.regionsTable.findMany();
+    return regions.every((region) => region.isUnlocked === false);
+  }
+
+  async canUnlock(regionID: string, inventoryID: string): Promise<boolean> {
+    // First unlock is free
+    const allLocked = await this.allRegionsLocked();
+    if (allLocked) {
+      return true;
+    }
+
+    // do payment logic 
+    const hasPaid = await paymentFunction(inventoryID, regionID);
+    if (hasPaid) {
+      return true;
+    }
+
+    throw new Error("You're broke! :(");
+  }
+
+  async unlockRegion(regionID: string, inventoryID: string): Promise<void> {
+    const allowed = await this.canUnlock(regionID, inventoryID);
+    if (!allowed) return; // safety, though canUnlock throws if not allowed
+
     await this.#client
       .update(this.#table)
       .set({ isUnlocked: true })
