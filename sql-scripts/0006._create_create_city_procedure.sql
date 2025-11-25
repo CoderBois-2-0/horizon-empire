@@ -15,7 +15,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE PROCEDURE create_city(
   p_map_type map_type, 
   p_map_size map_size, 
-  p_user_id VARCHAR(32),
+  p_user_id VARCHAR(36),
   p_city_name VARCHAR(32)
 )
 AS $$
