@@ -19,6 +19,7 @@ CREATE TABLE "tile_types" (
 );
 --> statement-breakpoint
 ALTER TABLE "tiles" RENAME COLUMN "type" TO "tile_type_id";--> statement-breakpoint
+ALTER TABLE "tiles" ALTER COLUMN "tile_type_id" TYPE VARCHAR(36);
 ALTER TABLE "tiles" DROP CONSTRAINT "tiles_region_id_regions_id_fk";
 --> statement-breakpoint
 ALTER TABLE "tiles" ALTER COLUMN "region_id" SET NOT NULL;--> statement-breakpoint
