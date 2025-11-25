@@ -2,8 +2,8 @@ import { foreignKey, pgTable, varchar, integer } from "drizzle-orm/pg-core";
 import { resourceTable } from "$db/resource/schema.js";
 import { inventoryTable } from "$db/inventory/schema.js";
 
-const resourceJunctionTable = pgTable(
-  "inventory_resource_junctions",
+const inventoryResourceTable = pgTable(
+  "inventory_resources",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     resourceID: varchar("resource_id", { length: 36 }).notNull(),
@@ -22,4 +22,4 @@ const resourceJunctionTable = pgTable(
   ],
 );
 
-export { resourceJunctionTable };
+export { inventoryResourceTable };

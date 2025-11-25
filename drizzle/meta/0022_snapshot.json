@@ -1,6 +1,6 @@
 {
-  "id": "f22edf0a-a98d-4d9e-9fa5-2cb5ec942449",
-  "prevId": "c187dfe6-7315-4977-857e-d5cb04a28bdf",
+  "id": "5ac40bae-0be4-455f-b0f6-e60a00d8d983",
+  "prevId": "15521256-8758-4db6-8a68-265cd5eeeca8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -73,8 +73,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.building": {
-      "name": "building",
+    "public.buildings": {
+      "name": "buildings",
       "schema": "",
       "columns": {
         "id": {
@@ -107,13 +107,6 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
-        },
-        "buildable_on_tiles": {
-          "name": "buildable_on_tiles",
-          "type": "tile_type[]",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},
@@ -124,8 +117,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.building_resource_cost": {
-      "name": "building_resource_cost",
+    "public.building_resource_costs": {
+      "name": "building_resource_costs",
       "schema": "",
       "columns": {
         "id": {
@@ -155,18 +148,18 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "building_resource_cost_building_id_building_id_fk": {
-          "name": "building_resource_cost_building_id_building_id_fk",
-          "tableFrom": "building_resource_cost",
-          "tableTo": "building",
+        "building_resource_costs_building_id_buildings_id_fk": {
+          "name": "building_resource_costs_building_id_buildings_id_fk",
+          "tableFrom": "building_resource_costs",
+          "tableTo": "buildings",
           "columnsFrom": ["building_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "building_resource_cost_resource_id_resources_id_fk": {
-          "name": "building_resource_cost_resource_id_resources_id_fk",
-          "tableFrom": "building_resource_cost",
+        "building_resource_costs_resource_id_resources_id_fk": {
+          "name": "building_resource_costs_resource_id_resources_id_fk",
+          "tableFrom": "building_resource_costs",
           "tableTo": "resources",
           "columnsFrom": ["resource_id"],
           "columnsTo": ["id"],
@@ -175,11 +168,61 @@
         }
       },
       "compositePrimaryKeys": {
-        "building_resource_cost_id_pk": {
-          "name": "building_resource_cost_id_pk",
+        "building_resource_costs_id_pk": {
+          "name": "building_resource_costs_id_pk",
           "columns": ["id"]
         }
       },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.building_tile_types": {
+      "name": "building_tile_types",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "buiilding_id": {
+          "name": "buiilding_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tile_type_id": {
+          "name": "tile_type_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "building_tile_types_tile_type_id_tile_types_id_fk": {
+          "name": "building_tile_types_tile_type_id_tile_types_id_fk",
+          "tableFrom": "building_tile_types",
+          "tableTo": "tile_types",
+          "columnsFrom": ["tile_type_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "building_tile_types_buiilding_id_buildings_id_fk": {
+          "name": "building_tile_types_buiilding_id_buildings_id_fk",
+          "tableFrom": "building_tile_types",
+          "tableTo": "buildings",
+          "columnsFrom": ["buiilding_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -276,6 +319,63 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.inventory_resources": {
+      "name": "inventory_resources",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inventory_id": {
+          "name": "inventory_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "inventory_resources_resource_id_resources_id_fk": {
+          "name": "inventory_resources_resource_id_resources_id_fk",
+          "tableFrom": "inventory_resources",
+          "tableTo": "resources",
+          "columnsFrom": ["resource_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "inventory_resources_inventory_id_inventories_id_fk": {
+          "name": "inventory_resources_inventory_id_inventories_id_fk",
+          "tableFrom": "inventory_resources",
+          "tableTo": "inventories",
+          "columnsFrom": ["inventory_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.jobs": {
       "name": "jobs",
       "schema": "",
@@ -315,10 +415,42 @@
           "name": "placed_building_id",
           "type": "varchar(36)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_jobs_person_id": {
+          "name": "idx_jobs_person_id",
+          "columns": [
+            {
+              "expression": "person_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_jobs_unoccupied": {
+          "name": "idx_jobs_unoccupied",
+          "columns": [
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"jobs\".\"person_id\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "jobs_person_id_persons_id_fk": {
           "name": "jobs_person_id_persons_id_fk",
@@ -378,47 +510,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.occupations": {
-      "name": "occupations",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(36)",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(32)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "placed_building_id": {
-          "name": "placed_building_id",
-          "type": "varchar(36)",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "occupations_placed_building_id_placed_buildings_id_fk": {
-          "name": "occupations_placed_building_id_placed_buildings_id_fk",
-          "tableFrom": "occupations",
-          "tableTo": "placed_buildings",
-          "columnsFrom": ["placed_building_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.persons": {
       "name": "persons",
       "schema": "",
@@ -429,39 +520,15 @@
           "primaryKey": true,
           "notNull": true
         },
-        "age_category": {
-          "name": "age_category",
-          "type": "age_category",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "income_group": {
-          "name": "income_group",
-          "type": "income_group",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "housing_id": {
-          "name": "housing_id",
-          "type": "varchar(36)",
+        "name": {
+          "name": "name",
+          "type": "varchar(20)",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "persons_housing_id_placed_buildings_id_fk": {
-          "name": "persons_housing_id_placed_buildings_id_fk",
-          "tableFrom": "persons",
-          "tableTo": "placed_buildings",
-          "columnsFrom": ["housing_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -490,20 +557,19 @@
           "primaryKey": false,
           "notNull": true
         },
-        "build_on_tiles": {
-          "name": "build_on_tiles",
-          "type": "tile_type[]",
-          "typeSchema": "public",
+        "region_id": {
+          "name": "region_id",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "placed_buildings_building_id_building_id_fk": {
-          "name": "placed_buildings_building_id_building_id_fk",
+        "placed_buildings_building_id_buildings_id_fk": {
+          "name": "placed_buildings_building_id_buildings_id_fk",
           "tableFrom": "placed_buildings",
-          "tableTo": "building",
+          "tableTo": "buildings",
           "columnsFrom": ["building_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
@@ -514,6 +580,72 @@
           "tableFrom": "placed_buildings",
           "tableTo": "cities",
           "columnsFrom": ["city_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "placed_buildings_region_id_regions_id_fk": {
+          "name": "placed_buildings_region_id_regions_id_fk",
+          "tableFrom": "placed_buildings",
+          "tableTo": "regions",
+          "columnsFrom": ["region_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.placed_building_tile_types": {
+      "name": "placed_building_tile_types",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "placed_buiilding_id": {
+          "name": "placed_buiilding_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tile_type_id": {
+          "name": "tile_type_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "placed_building_tile_types_tile_type_id_tile_types_id_fk": {
+          "name": "placed_building_tile_types_tile_type_id_tile_types_id_fk",
+          "tableFrom": "placed_building_tile_types",
+          "tableTo": "tile_types",
+          "columnsFrom": ["tile_type_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "placed_building_tile_types_placed_buiilding_id_placed_buildings_id_fk": {
+          "name": "placed_building_tile_types_placed_buiilding_id_placed_buildings_id_fk",
+          "tableFrom": "placed_building_tile_types",
+          "tableTo": "placed_buildings",
+          "columnsFrom": ["placed_buiilding_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -573,8 +705,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.region_resource_cost": {
-      "name": "region_resource_cost",
+    "public.region_resource_costs": {
+      "name": "region_resource_costs",
       "schema": "",
       "columns": {
         "id": {
@@ -604,18 +736,18 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "region_resource_cost_region_id_regions_id_fk": {
-          "name": "region_resource_cost_region_id_regions_id_fk",
-          "tableFrom": "region_resource_cost",
+        "region_resource_costs_region_id_regions_id_fk": {
+          "name": "region_resource_costs_region_id_regions_id_fk",
+          "tableFrom": "region_resource_costs",
           "tableTo": "regions",
           "columnsFrom": ["region_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "region_resource_cost_resource_id_resources_id_fk": {
-          "name": "region_resource_cost_resource_id_resources_id_fk",
-          "tableFrom": "region_resource_cost",
+        "region_resource_costs_resource_id_resources_id_fk": {
+          "name": "region_resource_costs_resource_id_resources_id_fk",
+          "tableFrom": "region_resource_costs",
           "tableTo": "resources",
           "columnsFrom": ["resource_id"],
           "columnsTo": ["id"],
@@ -624,8 +756,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "region_resource_cost_id_pk": {
-          "name": "region_resource_cost_id_pk",
+        "region_resource_costs_id_pk": {
+          "name": "region_resource_costs_id_pk",
           "columns": ["id"]
         }
       },
@@ -659,8 +791,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.inventory_resource_junctions": {
-      "name": "inventory_resource_junctions",
+    "public.tiles": {
+      "name": "tiles",
       "schema": "",
       "columns": {
         "id": {
@@ -669,42 +801,35 @@
           "primaryKey": true,
           "notNull": true
         },
-        "resource_id": {
-          "name": "resource_id",
+        "tile_type_id": {
+          "name": "tile_type_id",
           "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true
         },
-        "inventory_id": {
-          "name": "inventory_id",
+        "region_id": {
+          "name": "region_id",
           "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true
-        },
-        "quantity": {
-          "name": "quantity",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "inventory_resource_junctions_resource_id_resources_id_fk": {
-          "name": "inventory_resource_junctions_resource_id_resources_id_fk",
-          "tableFrom": "inventory_resource_junctions",
-          "tableTo": "resources",
-          "columnsFrom": ["resource_id"],
+        "tiles_region_id_regions_id_fk": {
+          "name": "tiles_region_id_regions_id_fk",
+          "tableFrom": "tiles",
+          "tableTo": "regions",
+          "columnsFrom": ["region_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "inventory_resource_junctions_inventory_id_inventories_id_fk": {
-          "name": "inventory_resource_junctions_inventory_id_inventories_id_fk",
-          "tableFrom": "inventory_resource_junctions",
-          "tableTo": "inventories",
-          "columnsFrom": ["inventory_id"],
+        "tiles_tile_type_id_tile_types_id_fk": {
+          "name": "tiles_tile_type_id_tile_types_id_fk",
+          "tableFrom": "tiles",
+          "tableTo": "tile_types",
+          "columnsFrom": ["tile_type_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -716,8 +841,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.tiles": {
-      "name": "tiles",
+    "public.tile_types": {
+      "name": "tile_types",
       "schema": "",
       "columns": {
         "id": {
@@ -726,34 +851,23 @@
           "primaryKey": true,
           "notNull": true
         },
-        "type": {
-          "name": "type",
-          "type": "tile_type",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "region_id": {
-          "name": "region_id",
-          "type": "varchar(36)",
+        "name": {
+          "name": "name",
+          "type": "varchar(10)",
           "primaryKey": false,
           "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "tiles_region_id_regions_id_fk": {
-          "name": "tiles_region_id_regions_id_fk",
-          "tableFrom": "tiles",
-          "tableTo": "regions",
-          "columnsFrom": ["region_id"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tile_types_name_unique": {
+          "name": "tile_types_name_unique",
+          "nullsNotDistinct": false,
+          "columns": ["name"]
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -807,6 +921,11 @@
       "schema": "public",
       "values": ["housing", "work", "service", "educational"]
     },
+    "public.income_group": {
+      "name": "income_group",
+      "schema": "public",
+      "values": ["low", "medium", "high"]
+    },
     "public.job_type": {
       "name": "job_type",
       "schema": "public",
@@ -829,21 +948,6 @@
       "name": "map_type",
       "schema": "public",
       "values": ["forrest", "arctic", "desert", "bay"]
-    },
-    "public.age_category": {
-      "name": "age_category",
-      "schema": "public",
-      "values": ["newborn", "child", "teen", "young adult", "adult", "senior"]
-    },
-    "public.income_group": {
-      "name": "income_group",
-      "schema": "public",
-      "values": ["low", "medium", "high"]
-    },
-    "public.tile_type": {
-      "name": "tile_type",
-      "schema": "public",
-      "values": ["grass", "rock", "water", "snow", "sand", "farmland"]
     }
   },
   "schemas": {},
