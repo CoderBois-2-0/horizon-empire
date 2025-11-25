@@ -1,5 +1,5 @@
 import { jwt, type JwtVariables } from "hono/jwt";
-import { createRouter, IEnv } from "./index";
+import { createRouter } from "./index";
 import cityRouter from "./city/index";
 import { TSafeUser } from "$db/user/types";
 

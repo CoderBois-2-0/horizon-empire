@@ -1,6 +1,5 @@
 import { connectDB, TDB } from "$db/index";
 import { sql } from "drizzle-orm";
-import { cityTable } from "./schema";
 import { ICityInsert } from "./types";
 
 class CityHandler {
