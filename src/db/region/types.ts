@@ -1,0 +1,12 @@
+import { regionsTable } from "./schema";
+
+export type IRegion = typeof regionsTable.$inferSelect;
+
+export interface IRegionQuery {
+  mapID?: string;
+}
+
+export interface IRegionUpdate {
+  isUnlocked?: boolean;
+  inventoryID?: string;
+}
