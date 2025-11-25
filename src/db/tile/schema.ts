@@ -1,19 +1,23 @@
 import { pgTable, varchar, foreignKey } from "drizzle-orm/pg-core";
 import { regionsTable } from "$db/region/schema.js";
-import { tileType } from "$db/tileType/schema.js";
+import { tileTypeTable } from "$db/tileType/schema.js";
 
 const tileTable = pgTable(
   "tiles",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
-    type: tileType("type").notNull(),
-    regionID: varchar("region_id", { length: 36 }),
+    tileTypeID: varchar("tile_type_id", { length: 36 }).notNull(),
+    regionID: varchar("region_id", { length: 36 }).notNull(),
   },
   (table) => [
     foreignKey({
       columns: [table.regionID],
       foreignColumns: [regionsTable.id],
-    }),
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.tileTypeID],
+      foreignColumns: [tileTypeTable.id],
+    }).onDelete("cascade"),
   ],
 );
 

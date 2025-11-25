@@ -148,6 +148,20 @@
       "when": 1763734922767,
       "tag": "0020_omniscient_living_lightning",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1763748586670,
+      "tag": "0021_omniscient_ted_forrester",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1763984289942,
+      "tag": "0022_keen_major_mapleleaf",
+      "breakpoints": true
     }
   ]
 }
