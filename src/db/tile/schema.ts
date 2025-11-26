@@ -22,11 +22,4 @@ const tileTable = pgTable(
   ],
 );
 
-const tileRelations = relations(tileTable, ({ one }) => ({
-  region: one(regionsTable, {
-    fields: [tileTable.regionID],
-    references: [regionsTable.id],
-  }),
-}));
-
-export { tileTable, tileRelations };
+export { tileTable };
