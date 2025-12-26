@@ -1,14 +1,11 @@
-import { jwt, type JwtVariables } from "hono/jwt";
-import { createRouter } from "./index";
+import { jwt } from "hono/jwt";
+import { authTokenName, createRouter } from "./util";
 import cityRouter from "./city/index";
-import { TSafeUser } from "$db/user/types";
-
-type TProtectedVariables = JwtVariables<TSafeUser>;
 
 const router = createRouter()
   .use((c, next) => {
     const jwtMiddleware = jwt({
-      cookie: "auth-token",
+      cookie: authTokenName,
       secret: c.env.JWT_SECRET,
     });
 
@@ -17,4 +14,3 @@ const router = createRouter()
   .route("/city", cityRouter);
 
 export default router;
-export { TProtectedVariables };

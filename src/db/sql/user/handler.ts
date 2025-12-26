@@ -1,4 +1,4 @@
-import { connectDB, TDB } from "$db/index";
+import { connectDB, TDB } from "$db/sql/index";
 import { sql } from "drizzle-orm";
 import { userTable } from "./schema";
 import { TSafeUser, TUser, TUserInsert } from "./types";
@@ -28,7 +28,7 @@ class UserHandler {
     return safeUser;
   }
 
-  async findByUsername(
+  async findByUserCredentials(
     username: TUser["username"],
     password: TUser["password"],
   ): Promise<TSafeUser | undefined> {

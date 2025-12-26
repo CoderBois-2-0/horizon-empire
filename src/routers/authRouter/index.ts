@@ -1,29 +1,8 @@
-import { sign } from "hono/jwt";
-
-import { UserHandler } from "$db/user/handler";
-import { TSafeUser } from "$db/user/types";
-import { createRouter, IEnv, TContext } from "$routers/index";
+import { UserHandler } from "$db/sql/user/handler";
+import { authTokenName, createRouter, setAuthCookie } from "$routers/util";
+import { IAuthEnv } from "./types";
 import { loginValidator, signUpValidator } from "./validation";
-import { deleteCookie, setCookie } from "hono/cookie";
-
-interface IAuthEnv extends IEnv {
-  Variables: {
-    userHandler: UserHandler;
-  };
-}
-
-const authTokenName = "auth-token";
-
-async function setAuthCookie(c: TContext<IAuthEnv>, payload: TSafeUser) {
-  const jwt = await sign(payload, c.env.JWT_SECRET);
-
-  setCookie(c, authTokenName, jwt, {
-    path: "/",
-    httpOnly: true,
-    // Should set max age to 3 days from when the cookies was set
-    maxAge: 60 * 60 * 24 * 3,
-  });
-}
+import { deleteCookie } from "hono/cookie";
 
 const router = createRouter<IAuthEnv>()
   .use(async (c, next) => {
@@ -45,7 +24,7 @@ const router = createRouter<IAuthEnv>()
     const userHandler = c.get("userHandler");
 
     const userRequest = c.req.valid("json");
-    const user = await userHandler.findByUsername(
+    const user = await userHandler.findByUserCredentials(
       userRequest.username,
       userRequest.password,
     );
