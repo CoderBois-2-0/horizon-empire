@@ -1,7 +1,8 @@
 import { createDocumentService, createSQLService } from "./service";
 import { createMiddleware } from "hono/factory";
+import { IAuthEnv } from "./types";
 
-const injectUserService = createMiddleware(async (c, next) => {
+const injectUserService = createMiddleware<IAuthEnv>(async (c, next) => {
   const { db } = c.req.query();
 
   switch (db) {
@@ -11,7 +12,7 @@ const injectUserService = createMiddleware(async (c, next) => {
       c.set("userService", createSQLService(c.env.DB_URL));
       break;
     case "document":
-      c.set("userService", createDocumentService());
+      c.set("userService", createDocumentService(c.env.DOCUMENT_DB_URL));
       break;
     default:
       return c.json(

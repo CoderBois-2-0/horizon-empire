@@ -7,8 +7,8 @@ class UserDocumentHandler {
   #conn: Promise<Mongoose>;
   #model = model("User", userSchema);
 
-  constructor() {
-    this.#conn = getConn();
+  constructor(dbURL: string) {
+    this.#conn = getConn(dbURL);
   }
 
   async create(newUser: TUser) {

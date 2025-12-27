@@ -23,8 +23,8 @@ function createSQLService(dbURL: string): IUserService {
   };
 }
 
-function createDocumentService(): IUserService {
-  const userDocumentHandlder = new UserDocumentHandler();
+function createDocumentService(dbURL: string): IUserService {
+  const userDocumentHandlder = new UserDocumentHandler(dbURL);
 
   return {
     create: async (newUser) => {
