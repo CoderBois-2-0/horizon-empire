@@ -1,0 +1,10 @@
+services:
+  document:
+    image: mongo:8.2.3
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: horizon-empire
+      MONGO_INITDB_ROOT_USERNAME: horizon
+      MONGO_INITDB_ROOT_PASSWORD: horizon

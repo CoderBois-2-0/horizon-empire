@@ -1,6 +1,6 @@
-import { CityHandler } from "$db/city/handler";
-import { createRouter, IEnv } from "$routers/index";
-import { TProtectedVariables } from "$routers/protectedRouter";
+import { CityHandler } from "$db/sql/city/handler";
+import { createRouter } from "$routers/util";
+import { IEnv, TProtectedVariables } from "$routers/types";
 import { createCityValidator } from "./validation";
 
 interface ICityVariables extends TProtectedVariables {

@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { userTable } from "./schema";
 import { TSafeUser, TUser, TUserInsert } from "./types";
 
-class UserHandler {
+class UserSQLHandler {
   #client: TDB;
   #table = userTable;
 
@@ -51,4 +51,4 @@ class UserHandler {
   }
 }
 
-export { UserHandler };
+export default UserSQLHandler;

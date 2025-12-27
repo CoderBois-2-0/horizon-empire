@@ -1,4 +1,4 @@
-import { connectDB, TDB } from "$db/index";
+import { connectDB, TDB } from "$db/sql/index";
 import { IBuilding } from "./types";
 
 class BuildingHandler {
