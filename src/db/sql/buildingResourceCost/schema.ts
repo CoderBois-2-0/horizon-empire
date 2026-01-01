@@ -5,8 +5,8 @@ import {
   primaryKey,
   foreignKey,
 } from "drizzle-orm/pg-core";
-import { buildingTable } from "$db/building/schema.js";
-import { resourceTable } from "$db/resource/schema.js";
+import { buildingTable } from "$db/sql/building/schema.js";
+import { resourceTable } from "$db/sql/resource/schema.js";
 
 const buildingResourceCostTable = pgTable(
   "building_resource_costs",
@@ -26,6 +26,6 @@ const buildingResourceCostTable = pgTable(
       columns: [table.resourceID],
       foreignColumns: [resourceTable.id],
     }),
-  ],
+  ]
 );
 export { buildingResourceCostTable };

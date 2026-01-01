@@ -1,5 +1,5 @@
 import { createRouter } from "$routers/index";
-import { RegionHandler } from "$db/region/handler";
+import { RegionHandler } from "$db/sql/region/handler";
 import { regionQueryValidator, regionUnlockValidator } from "./validation";
 
 const regionRouter = createRouter();

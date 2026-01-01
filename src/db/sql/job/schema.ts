@@ -1,5 +1,5 @@
-import { personTable } from "$db/person/schema.js";
-import { placedBuildingTable } from "$db/placedBuilding/schema.js";
+import { personTable } from "$db/sql/person/schema.js";
+import { placedBuildingTable } from "$db/sql/placedBuilding/schema.js";
 import {
   pgEnum,
   pgTable,
@@ -45,7 +45,7 @@ const jobTable = pgTable(
 
     // index for finding unoccupied jobs
     index("idx_jobs_unoccupied").on(table.id).where(isNull(table.personID)),
-  ],
+  ]
 );
 
 export { jobType, jobTable };

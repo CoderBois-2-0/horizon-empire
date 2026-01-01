@@ -1,6 +1,6 @@
 import { createRouter, TContext, IEnv } from "$routers/index";
-import { BuildingHandler } from "$db/building/handler";
-import { IBuilding } from "$db/building/types";
+import { BuildingHandler } from "$db/sql/building/handler";
+import { IBuilding } from "$db/sql/building/types";
 
 const buildingRouter = createRouter();
 

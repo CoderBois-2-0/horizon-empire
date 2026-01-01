@@ -1,7 +1,7 @@
 import { jwt, type JwtVariables } from "hono/jwt";
 import { createRouter } from "./index";
 import cityRouter from "./city/index";
-import { TSafeUser } from "$db/user/types";
+import { TSafeUser } from "$db/sql/user/types";
 
 type TProtectedVariables = JwtVariables<TSafeUser>;
 

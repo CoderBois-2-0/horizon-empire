@@ -6,7 +6,7 @@ import {
   foreignKey,
 } from "drizzle-orm/pg-core";
 import { regionsTable } from "$db/region/schema.js";
-import { resourceTable } from "$db/resource/schema.js";
+import { resourceTable } from "$db/sql/resource/schema.js";
 
 const regionResourceCostTable = pgTable(
   "region_resource_costs",
@@ -26,6 +26,6 @@ const regionResourceCostTable = pgTable(
       columns: [table.resourceID],
       foreignColumns: [resourceTable.id],
     }),
-  ],
+  ]
 );
 export { regionResourceCostTable };

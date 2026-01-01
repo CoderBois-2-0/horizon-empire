@@ -1,5 +1,5 @@
 import { foreignKey, pgTable, varchar, integer } from "drizzle-orm/pg-core";
-import { resourceTable } from "$db/resource/schema.js";
+import { resourceTable } from "$db/sql/resource/schema.js";
 import { inventoryTable } from "$db/inventory/schema.js";
 
 const inventoryResourceTable = pgTable(
@@ -19,7 +19,7 @@ const inventoryResourceTable = pgTable(
       columns: [table.inventoryID],
       foreignColumns: [inventoryTable.id],
     }).onDelete("cascade"),
-  ],
+  ]
 );
 
 export { inventoryResourceTable };

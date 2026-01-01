@@ -1,4 +1,4 @@
-import { CityHandler } from "$db/city/handler";
+import { CityHandler } from "$db/sql/city/handler";
 import { createRouter, IEnv } from "$routers/index";
 import { TProtectedVariables } from "$routers/protectedRouter";
 import { createCityValidator } from "./validation";

@@ -1,4 +1,4 @@
-import { mapTable } from "$db/map/schema.js";
+import { mapTable } from "$db/sql/map/schema.js";
 import { getTableColumns, relations, sql } from "drizzle-orm";
 import {
   pgTable,
@@ -21,7 +21,7 @@ const regionsTable = pgTable(
       columns: [table.mapID],
       foreignColumns: [mapTable.id],
     }).onDelete("cascade"),
-  ],
+  ]
 );
 
 const regionRelation = relations(regionsTable, ({ one }) => ({
@@ -37,7 +37,7 @@ const regionWithTotalTiles = pgView("region_with_total_tiles").as((qb) =>
       ...getTableColumns(regionsTable),
       totalTiles: sql`total_region_tiles(${regionsTable.id})`.as("total_tiles"),
     })
-    .from(regionsTable),
+    .from(regionsTable)
 );
 
 export { regionsTable, regionRelation, regionWithTotalTiles };

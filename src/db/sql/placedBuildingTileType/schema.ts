@@ -1,5 +1,5 @@
-import { placedBuildingTable } from "$db/placedBuilding/schema";
-import { tileTypeTable } from "$db/tileType/schema";
+import { placedBuildingTable } from "$db/sql/placedBuilding/schema";
+import { tileTypeTable } from "$db/sql/tileType/schema";
 import { foreignKey, pgTable, varchar, integer } from "drizzle-orm/pg-core";
 
 const placedBuildingTileTypeTable = pgTable(
@@ -19,7 +19,7 @@ const placedBuildingTileTypeTable = pgTable(
       columns: [table.placedBuildingID],
       foreignColumns: [placedBuildingTable.id],
     }).onDelete("cascade"),
-  ],
+  ]
 );
 
 export { placedBuildingTileTypeTable };
