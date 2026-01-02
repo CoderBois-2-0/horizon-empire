@@ -1,15 +1,3 @@
-import { createRouter, TContext, IEnv } from "$routers/index";
-import { BuildingHandler } from "$db/building/handler";
-import { IBuilding } from "$db/building/types";
+import protectedRouter from "./protectedRouter";
 
-const buildingRouter = createRouter();
-
-buildingRouter.get("/buildings", async (c: TContext<IEnv>) => {
-  const buildingHandler = new BuildingHandler(c.env.DB_URL);
-
-  const buildings: IBuilding[] = await buildingHandler.getAll();
-
-  return c.json({ buildings });
-});
-
-export { buildingRouter };
+export default { path: "/city", protectedRouter };

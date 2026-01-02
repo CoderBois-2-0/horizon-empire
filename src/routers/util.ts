@@ -1,9 +1,11 @@
 import { Hono } from "hono";
 import { setCookie } from "hono/cookie";
 import { sign } from "hono/jwt";
+
 import { IEnv, TContext } from "./types";
 import { TSafeUser } from "$db/sql/user/types";
 import { IAuthEnv } from "./authRouter/types";
+import { createMiddleware } from "hono/factory";
 
 /**
  * @description
@@ -26,4 +28,38 @@ async function setAuthCookie(c: TContext<IAuthEnv>, payload: TSafeUser) {
   });
 }
 
-export { createRouter, authTokenName, setAuthCookie };
+function createServiceInjecter(
+  createSQLService: () => void,
+  createDocumentService: () => void,
+  createGraphService: () => void,
+) {
+  return createMiddleware(async (c, next) => {
+    const { db } = c.req.query();
+
+    switch (db) {
+      case undefined:
+        return c.json({ message: "The db query parameter is required" }, 400);
+      case "sql":
+        createSQLService();
+        break;
+      case "document":
+        createDocumentService();
+        break;
+      case "graph":
+        createGraphService();
+        break;
+      default:
+        return c.json(
+          {
+            message:
+              "The db query parameter did not match 'sql', 'document' or 'graph'",
+          },
+          400,
+        );
+    }
+
+    return next();
+  });
+}
+
+export { createRouter, authTokenName, setAuthCookie, createServiceInjecter };

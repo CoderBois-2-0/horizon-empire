@@ -2,7 +2,7 @@ import { connectDB, TDB } from "$db/sql/index";
 import { sql } from "drizzle-orm";
 import { ICityInsert } from "./types";
 
-class CityHandler {
+class CitySQLHandler {
   #client: TDB;
 
   constructor(dbUrl: string) {
@@ -16,4 +16,4 @@ class CityHandler {
   }
 }
 
-export { CityHandler };
+export default CitySQLHandler;

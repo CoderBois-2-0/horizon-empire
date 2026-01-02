@@ -8,3 +8,8 @@ services:
       MONGO_INITDB_DATABASE: horizon-empire
       MONGO_INITDB_ROOT_USERNAME: horizon
       MONGO_INITDB_ROOT_PASSWORD: horizon
+    volumes:
+      - horizon-document:/data/db
+
+volumes:
+  horizon-document:

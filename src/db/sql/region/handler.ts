@@ -1,6 +1,6 @@
 import { connectDB, TDB } from "$db/sql/index";
 import { IRegion } from "./types";
-import { regionsTable } from "./schema";
+import { regionsTable, regionWithTotalTiles } from "./schema";
 import { regionResourceCostTable } from "../regionResourceCost/schema";
 import { eq } from "drizzle-orm";
 
@@ -23,7 +23,7 @@ class RegionHandler {
 
   // get all regions
   async getAll(): Promise<IRegion[]> {
-    return await this.#client.query.regionsTable.findMany();
+    return this.#client.select().from(regionWithTotalTiles);
   }
 
   async allRegionsLocked(): Promise<boolean> {

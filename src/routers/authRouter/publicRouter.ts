@@ -5,7 +5,7 @@ import { loginValidator, signUpValidator } from "./validation";
 import { injectUserService } from "./util";
 
 const router = createRouter<IAuthEnv>()
-  .use(injectUserService)
+  .use((c, next) => injectUserService(c, next))
   .post("/sign-up", signUpValidator, async (c) => {
     const userHandler = c.get("userService");
 

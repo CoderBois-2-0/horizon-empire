@@ -5,13 +5,13 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/{{path}}/sign-up?db=document
+  url: {{baseUrl}}/{{path}}/sign-up?db={{db}}
   body: json
   auth: inherit
 }
 
 params:query {
-  db: document
+  db: {{db}}
 }
 
 headers {

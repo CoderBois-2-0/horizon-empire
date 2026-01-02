@@ -1,6 +1,7 @@
 import { InferSchemaType } from "mongoose";
-import { userSchema } from "./schema";
+import { citySchema, userSchema } from "./schema";
 
-type TUser = InferSchemaType<typeof userSchema>;
+type TDocumentUser = Omit<InferSchemaType<typeof userSchema>, "cities">;
+type TDocumentCity = InferSchemaType<typeof citySchema>;
 
-export { TUser };
+export { TDocumentUser, TDocumentCity };
