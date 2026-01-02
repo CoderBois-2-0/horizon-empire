@@ -1,6 +1,6 @@
 import { foreignKey, pgTable, varchar, integer } from "drizzle-orm/pg-core";
-import { resourceTable } from "$db/sql/resource/schema.js";
-import { inventoryTable } from "$db/sql/inventory/schema.js";
+import { resourceTable } from "$db/resource/schema.js";
+import { inventoryTable } from "$db/inventory/schema.js";
 
 const inventoryResourceTable = pgTable(
   "inventory_resources",
