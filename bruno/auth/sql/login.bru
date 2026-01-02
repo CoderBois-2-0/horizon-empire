@@ -1,0 +1,27 @@
+meta {
+  name: login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{path}}/login?db={{db}}
+  body: json
+  auth: inherit
+}
+
+params:query {
+  db: {{db}}
+}
+
+body:json {
+  {
+    "username": "doro-hd",
+    "password": "adminAdmin"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

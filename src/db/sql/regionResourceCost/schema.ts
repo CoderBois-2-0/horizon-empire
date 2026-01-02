@@ -5,7 +5,7 @@ import {
   primaryKey,
   foreignKey,
 } from "drizzle-orm/pg-core";
-import { regionsTable } from "$db/region/schema.js";
+import { regionsTable } from "$db/sql/region/schema.js";
 import { resourceTable } from "$db/sql/resource/schema.js";
 
 const regionResourceCostTable = pgTable(

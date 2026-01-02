@@ -1,5 +1,5 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
-import { generateID } from "$db/index";
+import { generateID } from "$db/sql/index";
 
 const userTable = pgTable("users", {
   id: varchar("id", { length: 36 }).primaryKey().$defaultFn(generateID),
