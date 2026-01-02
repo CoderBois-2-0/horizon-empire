@@ -1,4 +1,4 @@
-import { mapSize, mapType } from "$db/map/schema";
+import { mapSize, mapType } from "$db/sql/map/schema";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod/v4";
 
@@ -10,4 +10,4 @@ const cityPostSchema = z.object({
 
 const createCityValidator = zValidator("json", cityPostSchema);
 
-export { createCityValidator };
+export { cityPostSchema, createCityValidator };

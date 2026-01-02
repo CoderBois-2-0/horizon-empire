@@ -21,4 +21,4 @@ const loginSchema = z
 
 const loginValidator = zValidator("json", loginSchema);
 
-export { signUpValidator, loginValidator };
+export { signUpSchema, signUpValidator, loginSchema, loginValidator };
