@@ -1,6 +1,6 @@
 import { pgTable, varchar, foreignKey } from "drizzle-orm/pg-core";
-import { buildingTable } from "$db/sql/building/schema.js";
-import { cityTable } from "$db/sql/city/schema.js";
+import { buildingTable } from "$db/building/schema.js";
+import { cityTable } from "$db/city/schema.js";
 import { regionsTable } from "$db/region/schema";
 
 const placedBuildingTable = pgTable(

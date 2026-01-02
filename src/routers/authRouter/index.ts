@@ -1,7 +1,7 @@
 import { sign } from "hono/jwt";
 
-import { UserHandler } from "$db/sql/user/handler";
-import { TSafeUser } from "$db/sql/user/types";
+import { UserHandler } from "$db/user/handler";
+import { TSafeUser } from "$db/user/types";
 import { createRouter, IEnv, TContext } from "$routers/index";
 import { loginValidator, signUpValidator } from "./validation";
 import { deleteCookie, setCookie } from "hono/cookie";

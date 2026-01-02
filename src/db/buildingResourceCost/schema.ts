@@ -5,22 +5,22 @@ import {
   primaryKey,
   foreignKey,
 } from "drizzle-orm/pg-core";
-import { regionsTable } from "$db/region/schema.js";
-import { resourceTable } from "$db/sql/resource/schema.js";
+import { buildingTable } from "$db/building/schema.js";
+import { resourceTable } from "$db/resource/schema.js";
 
-const regionResourceCostTable = pgTable(
-  "region_resource_costs",
+const buildingResourceCostTable = pgTable(
+  "building_resource_costs",
   {
-    id: varchar("id", { length: 36 }).notNull(),
-    regionID: varchar("region_id", { length: 36 }).notNull(),
+    id: varchar("id", { length: 36 }),
+    buildingID: varchar("building_id", { length: 36 }).notNull(),
     resourceID: varchar("resource_id", { length: 36 }).notNull(),
     amount: integer("amount").notNull(),
   },
   (table) => [
     primaryKey({ columns: [table.id] }),
     foreignKey({
-      columns: [table.regionID],
-      foreignColumns: [regionsTable.id],
+      columns: [table.buildingID],
+      foreignColumns: [buildingTable.id],
     }),
     foreignKey({
       columns: [table.resourceID],
@@ -28,4 +28,4 @@ const regionResourceCostTable = pgTable(
     }),
   ]
 );
-export { regionResourceCostTable };
+export { buildingResourceCostTable };

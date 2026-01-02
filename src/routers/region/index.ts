@@ -1,5 +1,5 @@
 import { createRouter } from "$routers/index";
-import { RegionHandler } from "$db/sql/region/handler";
+import { RegionHandler } from "$db/region/handler";
 import { regionQueryValidator, regionUnlockValidator } from "./validation";
 
 const regionRouter = createRouter();
@@ -36,6 +36,6 @@ regionRouter.put(
       console.error("Unlock error:", err);
       return c.json({ error: "Failed to unlock region" }, 500);
     }
-  },
+  }
 );
 export { regionRouter };

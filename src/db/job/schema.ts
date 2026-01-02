@@ -1,5 +1,5 @@
-import { personTable } from "$db/sql/person/schema.js";
-import { placedBuildingTable } from "$db/sql/placedBuilding/schema.js";
+import { personTable } from "$db/person/schema.js";
+import { placedBuildingTable } from "$db/placedBuilding/schema.js";
 import {
   pgEnum,
   pgTable,

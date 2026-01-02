@@ -1,5 +1,5 @@
-import { TMap } from "$db/sql/map/types";
-import { TUser } from "$db/sql/user/types";
+import { TMap } from "$db/map/types";
+import { TUser } from "$db/user/types";
 import { cityTable } from "./schema";
 
 type TCity = typeof cityTable.$inferSelect;

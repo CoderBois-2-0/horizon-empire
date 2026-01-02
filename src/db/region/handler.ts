@@ -1,7 +1,7 @@
 import { connectDB, TDB } from "$db/index";
 import { IRegion } from "./types";
 import { regionsTable } from "./schema";
-import { regionResourceCostTable } from "../sql/regionResourceCost/schema";
+import { regionResourceCostTable } from "../regionResourceCost/schema";
 import { eq } from "drizzle-orm";
 
 class RegionHandler {
