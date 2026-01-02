@@ -10,4 +10,4 @@ const cityPostSchema = z.object({
 
 const createCityValidator = zValidator("json", cityPostSchema);
 
-export { createCityValidator };
+export { cityPostSchema, createCityValidator };

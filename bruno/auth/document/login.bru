@@ -5,9 +5,13 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/{{path}}/login
+  url: {{baseUrl}}/{{path}}/login?db={{db}}
   body: json
   auth: inherit
+}
+
+params:query {
+  db: {{db}}
 }
 
 body:json {

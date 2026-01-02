@@ -1,5 +1,5 @@
 import { pgTable, varchar, foreignKey } from "drizzle-orm/pg-core";
-import { regionsTable } from "$db/region/schema.js";
+import { regionsTable } from "$db/sql/region/schema.js";
 import { relations } from "drizzle-orm";
 import { tileTypeTable } from "$db/tileType/schema.js";
 
