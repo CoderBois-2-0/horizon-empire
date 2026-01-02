@@ -1,5 +1,5 @@
 import { placedBuildingTable } from "$db/placedBuilding/schema";
-import { tileTypeTable } from "$db/tileType/schema";
+import { tileTypeTable } from "$db/sql/tileType/schema";
 import { foreignKey, pgTable, varchar, integer } from "drizzle-orm/pg-core";
 
 const placedBuildingTileTypeTable = pgTable(

@@ -1,4 +1,4 @@
-import { connectDB, TDB } from "$db/index";
+import { connectDB, TDB } from "$db/sql/index";
 import { IRegion } from "./types";
 import { regionsTable, regionWithTotalTiles } from "./schema";
 import { regionResourceCostTable } from "../regionResourceCost/schema";
