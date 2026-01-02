@@ -1,0 +1,32 @@
+"""
+Safe User type (password is never exposed via GraphQL).
+"""
+type User {
+  id: ID!
+  username: String!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+}
+
+type CreateUserPayload {
+  user: User!
+}
+
+extend type Query {
+  "Fetch a user by id (safe fields only)."
+  user(id: ID!): User
+
+  "Fetch a user by username (safe fields only)."
+  userByUsername(username: String!): User
+}
+
+extend type Mutation {
+  "Create a new user (username must be unique). Returns safe user."
+  createUser(input: CreateUserInput!): CreateUserPayload!
+
+  "Delete user by id (and cascade-delete owned cities to mimic SQL ON DELETE CASCADE)."
+  deleteUser(id: ID!): ID!
+}
