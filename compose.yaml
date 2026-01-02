@@ -3,12 +3,12 @@ services:
     image: neo4j:2025.11.2
     restart: always
     ports:
-      - 7687:7687
+      - 7474:7474   # Neo4j Browser
+      - 7687:7687   # Bolt (driver)
     environment:
       NEO4J_AUTH: neo4j/your_password
     volumes:
       - horizon-graph:/data
-
 
 volumes:
   horizon-graph:
