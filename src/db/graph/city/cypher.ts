@@ -19,3 +19,14 @@ export const CITY_CYPHER = {
     RETURN $id AS id
   `,
 } as const;
+
+/**
+ * Neo4j schema constraints for City.
+ * Run once on startup or via migration.
+ */
+export const CITY_CONSTRAINTS = [
+  `
+  CREATE CONSTRAINT city_id_unique IF NOT EXISTS
+  FOR (c:City) REQUIRE c.id IS UNIQUE
+  `,
+] as const;
