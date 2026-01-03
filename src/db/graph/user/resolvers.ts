@@ -1,13 +1,9 @@
 import type { Driver } from "neo4j-driver";
-import { USER_CYPHER } from "./cypher";
 import type { CreateUserInput, CreateUserPayload, UserDTO } from "./types";
-
-type ResolverContext = {
-  driver: Driver;
-};
+import { UserGraphHandler } from "./handler";
 
 export function makeUserResolvers(driver: Driver) {
-  const ctx: ResolverContext = { driver };
+  const handler = new UserGraphHandler(driver);
 
   return {
     Query: {
@@ -16,16 +12,7 @@ export function makeUserResolvers(driver: Driver) {
         _parent: unknown,
         args: { id: string }
       ): Promise<UserDTO | null> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeRead((tx) =>
-            tx.run(USER_CYPHER.getById, { id: args.id })
-          );
-          const record = res.records[0];
-          return record ? (record.get("user") as UserDTO) : null;
-        } finally {
-          await session.close();
-        }
+        return handler.getUserById(args.id);
       },
 
       // Fetch a user by username (safe fields only)
@@ -33,16 +20,7 @@ export function makeUserResolvers(driver: Driver) {
         _parent: unknown,
         args: { username: string }
       ): Promise<UserDTO | null> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeRead((tx) =>
-            tx.run(USER_CYPHER.getByUsername, { username: args.username })
-          );
-          const record = res.records[0];
-          return record ? (record.get("user") as UserDTO) : null;
-        } finally {
-          await session.close();
-        }
+        return handler.getUserByUsername(args.username);
       },
     },
 
@@ -52,39 +30,16 @@ export function makeUserResolvers(driver: Driver) {
         _parent: unknown,
         args: { input: CreateUserInput }
       ): Promise<CreateUserPayload> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeWrite((tx) =>
-            tx.run(USER_CYPHER.create, {
-              username: args.input.username,
-              password: args.input.password,
-            })
-          );
-
-          const record = res.records[0];
-          if (!record) throw new Error("Unable to create user.");
-          return { user: record.get("user") as UserDTO };
-        } finally {
-          await session.close();
-        }
+        const user = await handler.createUser(args.input);
+        return { user };
       },
 
-      // Delete user by id and cascade-delete owned cities (SQL ON DELETE CASCADE behavior)
+      // Delete user by id (and cascade-delete owned cities)
       deleteUser: async (
         _parent: unknown,
         args: { id: string }
       ): Promise<string> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeWrite((tx) =>
-            tx.run(USER_CYPHER.deleteByIdCascadeCities, { id: args.id })
-          );
-          const record = res.records[0];
-          if (!record) throw new Error("User not found.");
-          return record.get("id") as string;
-        } finally {
-          await session.close();
-        }
+        return handler.deleteUser(args.id);
       },
     },
   };

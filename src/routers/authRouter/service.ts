@@ -1,12 +1,15 @@
 import UserSQLHandler from "$db/sql/user/handler";
 import UserDocumentHandler from "$db/document/user/handler";
+import { UserGraphHandler } from "$db/graph/user/handler";
 import { TSafeUser } from "$db/sql/user/types";
 import { TLoginUser, TSignUpUser } from "./types";
+import { makeNeo4jDriver } from "$db/graph/neo4j";
+
 
 interface IUserService {
   create: (newUser: TSignUpUser) => Promise<TSafeUser>;
   findByUserCredentials: (
-    user: TLoginUser,
+    user: TLoginUser
   ) => Promise<TSafeUser | undefined | null>;
 }
 
@@ -38,7 +41,7 @@ function createDocumentService(dbURL: string): IUserService {
     findByUserCredentials: async (user) => {
       const foundUser = await userDocumentHandlder.findByCredentials(
         user.username,
-        user.password,
+        user.password
       );
       if (!foundUser) {
         return null;
@@ -52,4 +55,42 @@ function createDocumentService(dbURL: string): IUserService {
   };
 }
 
-export { IUserService, createSQLService, createDocumentService };
+function createGraphService(): IUserService {
+  const driver = makeNeo4jDriver();
+  const userGraphHandler = new UserGraphHandler(driver);
+
+  return {
+    create: async (newUser) => {
+      // Store user in graph (handler returns safe user)
+      const created = await userGraphHandler.createUser({
+        username: newUser.username,
+        password: newUser.password,
+      });
+
+      return {
+        id: created.id,
+        username: created.username,
+      };
+    },
+
+    findByUserCredentials: async (user) => {
+      // Fetch user + password hash/string for credential checking
+      const found = await userGraphHandler.getUserAuthByUsername(user.username);
+      if (!found) return null;
+
+      if (found.password !== user.password) return null;
+
+      return {
+        id: found.id,
+        username: found.username,
+      };
+    },
+  };
+}
+
+export {
+  IUserService,
+  createSQLService,
+  createDocumentService,
+  createGraphService,
+};
