@@ -3,7 +3,6 @@ import { jobTable } from "./schema.js";
 import { personTable } from "../person/schema.js";
 import { placedBuildingTable } from "../placedBuilding/schema.js";
 
-
 export const jobRelations = relations(jobTable, ({ one }) => ({
   person: one(personTable, {
     fields: [jobTable.personID],

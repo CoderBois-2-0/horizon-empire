@@ -1,265 +1,300 @@
-import { MongoBuilding } from "./entities/buildings/types";
-import { MongoPerson } from "./entities/persons/types";
-import { MongoRegion } from "./entities/regions/types";
-import { MongoResource } from "./entities/resources/types";
-import { MongoTileType } from "./entities/tileTypes/types";
-import { MongoUser } from "./entities/users/types";
+import mongoose, { InferSchemaType } from "mongoose";
+import { PostgresData } from "../postgresql/fetchPostgresData.js";
+import {
+  regionSchema,
+  tileSchema,
+} from "../../src/db/document/region/schema.js";
+import { resourceSchema } from "../../src/db/document/resource/schema.js";
+import { tileTypeSchema } from "../../src/db/document/tileType/schema.js";
+// import { personSchema } from "../../src/db/document/person/schema.js";
+import { userSchema } from "$db/document/user/schema.js";
+import { TDocumentBuilding } from "$db/document/building/types.js";
 
-import { cityRelations } from "$db/city/relations.js";
-import { inventoryRelations } from "$db/inventory/relations.js";
+type TTile = Omit<InferSchemaType<typeof tileSchema>, "tileTypeID"> & {
+  tileTypeID?: mongoose.Types.ObjectId;
+};
+type TDocumentRegion = InferSchemaType<typeof regionSchema>;
+type TDocumentResource = InferSchemaType<typeof resourceSchema>;
+type TDocumentTileType = InferSchemaType<typeof tileTypeSchema>;
+// type TPerson = InferSchemaType<typeof personSchema>;
+type TUser = InferSchemaType<typeof userSchema>;
 
-import type { PostgresData } from "../postgresql/fetchPostgresData.js";
-import { ICity } from "./entities/cities/types";
-import { IJob } from "./entities/jobs/types";
+type TBuildingInsert = Omit<TDocumentBuilding, "buildOnTiles"> & {
+  buildOnTiles: TTile[];
+};
+type TJob = {
+  id?: string;
+  name: string;
+  type: string;
+  income: string;
+  placedBuildingID?: string;
+  personID?: string;
+};
+type TPlacedBuilding = {
+  buildingID: mongoose.Types.ObjectId;
+  usedTiles: TTile[];
+  jobs: TJob[];
+};
+type TRegionInsert = {
+  name: string;
+  cityID: mongoose.Types.ObjectId;
+  isUnlocked: boolean;
+  tiles: TTile[];
+  placedBuildings: TPlacedBuilding[];
+};
+type TInventory = {
+  resourceID: mongoose.Types.ObjectId;
+  resourceName: string;
+  resourceQuantity: number;
+};
+type TCity = {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  map: {
+    size: "small" | "medium" | "large";
+    type: "forrest" | "arctic" | "desert" | "bay";
+  };
+  inventory: TInventory[];
+};
+type TUserInsert = Omit<TUser, "cities"> & { cities: TCity[] };
+type TResourceInsert = TDocumentResource & { _id: mongoose.Types.ObjectId };
+type TTileTypeInsert = TDocumentTileType & { _id: mongoose.Types.ObjectId };
 
-export function transformToMongo(sqlData: PostgresData) {
+interface TransformedData {
+  users: TUserInsert[];
+  buildings: TBuildingInsert[];
+  regions: TRegionInsert[];
+  resources: TResourceInsert[];
+  tileTypes: TTileTypeInsert[];
+  // persons: TPerson[];
+}
+
+export function transformSqlToMongo(data: PostgresData): TransformedData {
   const {
     users,
     cities,
     regions,
     buildings,
+    maps,
     tileTypes,
+    tiles,
+    inventories,
     resources,
+    placedBuildings,
     persons,
     jobs,
     inventoryResources,
-    placedBuildings,
-    placedBuildingTileTypes,
     buildingTileTypes,
-  } = sqlData;
+    placedBuildingTileTypes,
+  } = data;
 
-  type CityWithMap = PostgresData["cities"][number] & {
-    map?: { size: string; type: string } | null;
+  // Keep a stable mapping from SQL resource IDs (UUIDs) to Mongo ObjectIds
+  const resourceIdMap = new Map<string, mongoose.Types.ObjectId>();
+  const getResourceObjectId = (sqlId: string | undefined | null) => {
+    const key = sqlId ?? "";
+    if (!resourceIdMap.has(key)) {
+      resourceIdMap.set(key, new mongoose.Types.ObjectId());
+    }
+    return resourceIdMap.get(key)!;
   };
 
-  type InventoryResourceWithRelations =
-    PostgresData["inventoryResources"][number] & {
-      inventory?: { cityID: string } | null;
-      resource?: { name: string } | null;
-    };
+  // Keep a stable mapping from SQL tile type IDs (UUIDs) to Mongo ObjectIds
+  const tileTypeIdMap = new Map<string, mongoose.Types.ObjectId>();
+  const getTileTypeObjectId = (sqlId: string | undefined | null) => {
+    const key = sqlId ?? "";
+    if (!tileTypeIdMap.has(key)) {
+      tileTypeIdMap.set(key, new mongoose.Types.ObjectId());
+    }
+    return tileTypeIdMap.get(key)!;
+  };
 
-  // ----------------------------------------------------------
-  // RESOURCES
-  // ----------------------------------------------------------
-  const mongoResources: MongoResource[] = resources.map((r) => ({
-    _id: r.id,
+  // Keep a stable mapping from SQL building IDs (UUIDs) to Mongo ObjectIds
+  const buildingIdMap = new Map<string, mongoose.Types.ObjectId>();
+  const getBuildingObjectId = (sqlId: string | undefined | null) => {
+    const key = sqlId ?? "";
+    if (!buildingIdMap.has(key)) {
+      buildingIdMap.set(key, new mongoose.Types.ObjectId());
+    }
+    return buildingIdMap.get(key)!;
+  };
+
+  // Keep a stable mapping from SQL city IDs (UUIDs) to Mongo ObjectIds
+  const cityIdMap = new Map<string, mongoose.Types.ObjectId>();
+  const getCityObjectId = (sqlId: string | undefined | null) => {
+    const key = sqlId ?? "";
+    if (!cityIdMap.has(key)) {
+      cityIdMap.set(key, new mongoose.Types.ObjectId());
+    }
+    return cityIdMap.get(key)!;
+  };
+
+  // --- Transform Buildings ---
+  const transformedBuildings: TBuildingInsert[] = buildings.map((building) => {
+    const buildTileTypes = buildingTileTypes.filter(
+      (bt) => bt.buildingID === building.id,
+    );
+
+    return {
+      name: building.name,
+      type: building.buildingType,
+      tilesNeeded: building.tilesUsed,
+      maxPersons: building.maxEntities,
+      buildOnTiles: buildTileTypes.map((bt) => {
+        const tileType = tileTypes.find((tt) => tt.id === bt.tileTypeID);
+        return {
+          tileTypeID: bt.tileTypeID
+            ? getTileTypeObjectId(bt.tileTypeID)
+            : undefined,
+          type: tileType?.name as
+            | "grass"
+            | "rock"
+            | "water"
+            | "snow"
+            | "sand"
+            | "farmland",
+          quantity: building.tilesUsed ?? 1,
+        };
+      }),
+    };
+  });
+
+  // --- Transform Tiles ---
+  const transformTiles = (tileList: any[]): TTile[] =>
+    tileList.map((tile) => ({
+      tileTypeID: getTileTypeObjectId(tile.tileTypeID),
+      type: (tileTypes.find((tt) => tt.id === tile.tileTypeID)?.name ||
+        "grass") as TTile["type"],
+      quantity: 1,
+    }));
+
+  // --- Transform Placed Buildings ---
+  const transformPlacedBuildings = (pbList: any[]): TPlacedBuilding[] =>
+    pbList.map((pb) => {
+      const pbTileTypes = placedBuildingTileTypes.filter(
+        (pbt) => pbt.placedBuildingID === pb.id,
+      );
+      const pbJobs: TJob[] = jobs
+        .filter((job) => job.placedBuildingID === pb.id)
+        .map((job) => ({
+          id: job.id,
+          name: job.name,
+          type: job.type,
+          income: String(job.income ?? ""),
+          placedBuildingID: job.placedBuildingID,
+          personID: job.personID ?? undefined,
+        }));
+
+      return {
+        buildingID: getBuildingObjectId(pb.buildingID),
+        usedTiles: pbTileTypes.map((pbt) => ({
+          tileTypeID: getTileTypeObjectId(pbt.tileTypeID),
+          type: (tileTypes.find((tt) => tt.id === pbt.tileTypeID)?.name ||
+            "grass") as TTile["type"],
+          quantity: pbt.quantity,
+        })),
+        jobs: pbJobs,
+      };
+    });
+
+  // --- Transform Regions ---
+  const transformedRegions: TRegionInsert[] = regions.map((region) => {
+    const regionTiles = tiles.filter((tile) => tile.regionID === region.id);
+    const regionPlacedBuildings = placedBuildings.filter(
+      (pb) => pb.regionID === region.id,
+    );
+    const regionCity = cities.find((city) => city.mapID === region.mapID);
+    return {
+      name: region.name,
+      cityID: getCityObjectId(regionCity?.id),
+      isUnlocked: region.isUnlocked,
+      tiles: transformTiles(regionTiles) as TTile[],
+      placedBuildings: transformPlacedBuildings(regionPlacedBuildings),
+    };
+  });
+
+  // --- Transform Users ---
+  const transformedUsers: TUserInsert[] = users.map((user) => ({
+    username: user.username,
+    password: user.password,
+    cities: cities
+      .filter((city) => city.userID === user.id)
+      .map((city) => {
+        const cityMap = maps.find((map) => map.id === city.mapID);
+        const cityInventories = inventories.filter(
+          (inv) => inv.cityID === city.id,
+        );
+        const cityInventoryItems: TInventory[] = cityInventories.flatMap(
+          (inv) => {
+            const invResources = inventoryResources.filter(
+              (ir) => ir.inventoryID === inv.id,
+            );
+            return invResources.map((ir) => ({
+              resourceID: getResourceObjectId(ir.resourceID ?? ir.resource?.id),
+              resourceName:
+                resources.find((r) => r.id === ir.resourceID)?.name ??
+                ir.resource?.name ??
+                "",
+              resourceQuantity: ir.quantity ?? 0,
+            }));
+          },
+        );
+        return {
+          _id: getCityObjectId(city.id),
+          name: city.name,
+          map: {
+            size: (cityMap?.size || "small") as "small" | "medium" | "large",
+            type: (cityMap?.type || "forrest") as
+              | "forrest"
+              | "arctic"
+              | "desert"
+              | "bay",
+          },
+          inventory: cityInventoryItems,
+        };
+      }),
+  }));
+
+  //   // --- Transform Persons ---
+  //   const transformedPersons: TPerson[] = persons.map((person) => {
+  //     const personJob = jobs.find((job) => job.personID === person.id);
+  //     const placedBuildingForPerson = placedBuildings.find((pb) => pb.id === personJob?.placedBuildingID);
+  //     const cityForPerson = cities.find((c) => c.id === placedBuildingForPerson?.cityID);
+
+  //     return {
+  //       name: person.name,
+  //       cityID: cityForPerson?.id || "",
+  //       job: personJob
+  //         ? {
+  //             jobID: personJob.id,
+  //             name: personJob.name,
+  //             buildingName: buildings.find((b) => b.id === personJob.placedBuildingID)?.name || "",
+  //             placedBuildingID: personJob.placedBuildingID,
+  //           }
+  //         : undefined,
+  //     };
+  //   });
+
+  // --- Transform Resources ---
+  const transformedResources: TResourceInsert[] = resources.map((r) => ({
+    _id: getResourceObjectId(r.id),
     name: r.name,
   }));
 
-  // ----------------------------------------------------------
-  // TILE TYPES
-  // ----------------------------------------------------------
-  const mongoTileTypes: MongoTileType[] = tileTypes.map((t) => ({
-    _id: t.id,
-    name: t.name ?? "",
+  // --- Transform Tile Types ---
+  const transformedTileTypes: TTileTypeInsert[] = tileTypes.map((tt) => ({
+    _id: getTileTypeObjectId(tt.id),
+    name: tt.name ?? "",
   }));
 
-  // ----------------------------------------------------------
-  // BUILDINGS
-  // ----------------------------------------------------------
-  const mongoBuildings: MongoBuilding[] = buildings.map((b) => {
-    const buildOn: Pick<MongoTileType, "_id" | "name">[] = buildingTileTypes
-      .filter((bt) => bt.buildingID === b.id)
-      .map((bt) => ({
-        _id: bt.tileTypeID,
-        name: (bt as any).tileType.name,
-      }));
-
-    return {
-      _id: b.id,
-      name: b.name,
-      type: b.buildingType,
-      tiles_needed: b.tilesUsed,
-      max_persons: b.maxEntities,
-      build_on_tile_types: buildOn,
-    };
-  });
-
-  // ----------------------------------------------------------
-  // USERS → Cities → Inventory
-  // ----------------------------------------------------------
-  const mongoUsers: MongoUser[] = users.map((u) => {
-    const userCities: ICity[] = cities
-      .filter((c) => c.userID === u.id)
-      .map((c) => ({
-        _id: c.id,
-        name: c.name,
-        map: {
-          size: (c as any).map.size,
-          type: (c as any).map.type,
-        },
-        inventory: inventoryResources
-          .filter((ir) => (ir as any).inventory.cityID === c.id)
-          .map((ir) => ({
-            _id: ir.resourceID,
-            name: (ir as any).resourceID.name,
-            quantity: ir.quantity,
-          })),
-      }));
-
-    return {
-      _id: u.id,
-      username: u.username,
-      password: u.password,
-      cities: userCities,
-    };
-  });
-
-  // ----------------------------------------------------------
-  // REGIONS → Tiles → Placed Buildings → Jobs
-  // ----------------------------------------------------------
-  const mongoRegions = (sqlData: PostgresData): MongoRegion[] => {
-    const {
-      regions,
-      tiles,
-      placedBuildings,
-      placedBuildingTileTypes,
-      jobs,
-      tileTypes,
-    } = sqlData;
-
-    return regions.map((r) => {
-      // Tiles in this region
-      const tilesForRegion = tiles
-        .filter((t) => t.regionID === r.id)
-        .map((t) => {
-          const tileTypeName =
-            tileTypes.find((tt) => tt.id === t.tileTypeID)?.name ?? "Unknown";
-          return {
-            type: tileTypeName,
-            quantity: (t as any).quantity ?? 0,
-          };
-        });
-
-      // Placed buildings in this region
-      const placedInRegion = placedBuildings
-        .filter((pb) => pb.regionID === r.id)
-        .map((pb) => {
-          // Tiles used by this placed building
-          const usedTiles: Pick<MongoTileType, "_id" | "name" | "quantity">[] =
-            placedBuildingTileTypes
-              .filter((pt) => pt.placedBuildingID === pb.id)
-              .map((pt) => {
-                const tileTypeName =
-                  tileTypes.find((tt) => tt.id === pt.tileTypeID)?.name ??
-                  "Unknown";
-                return {
-                  _id: pt.tileTypeID,
-                  name: tileTypeName,
-                  quantity: pt.quantity,
-                };
-              });
-
-          // Jobs assigned to this placed building
-          const jobsForPB: Pick<IJob, "_id" | "name" | "type" | "income">[] =
-            jobs
-              .filter((j) => j.placedBuildingID === pb.id)
-              .map((j) => ({
-                _id: j.id,
-                name: j.name,
-                type: j.type,
-                income: j.income,
-              }));
-
-          return {
-            _id: pb.id,
-            building_id: pb.buildingID,
-            used_tiles: usedTiles,
-            jobs: jobsForPB,
-          };
-        });
-
-      return {
-        _id: r.id,
-        name: r.name,
-        city_id: (r as any).city_id ?? (r as any).mapID, // adjust if you have map→city mapping
-        isUnlocked: r.isUnlocked,
-        tiles: tilesForRegion,
-        placedBuilding: placedInRegion,
-      };
-    });
+  // --- Return everything ---
+  const result: TransformedData = {
+    users: transformedUsers,
+    buildings: transformedBuildings,
+    regions: transformedRegions,
+    resources: transformedResources,
+    tileTypes: transformedTileTypes,
+    // persons: transformedPersons,
   };
 
-  const mongoRegions2: MongoRegion[] = regions.map((r) => {
-    // region tiles
-    const tilesForRegion = sqlData.tiles
-      .filter((t) => t.regionID === r.id)
-      .map((t) => ({
-        type: (t as any).tileType?.name ?? null,
-        quantity: (t as any).quantity ?? 0,
-      }));
-
-    // placed buildings inside region
-    const placedInRegion = placedBuildings
-      .filter((pb) => pb.regionID === r.id)
-      .map((pb) => {
-        const usedTiles = placedBuildingTileTypes
-          .filter((pt) => pt.placedBuildingID === pb.id)
-          .map((pt) => ({
-            tile_type_id: pt.tileTypeID,
-            tile_type: (pt as any).tileType?.name ?? null,
-            quantity: pt.quantity,
-          }));
-
-        const jobsForPB = jobs
-          .filter((j) => j.placedBuildingID === pb.id)
-          .map((j) => ({
-            _id: j.id,
-            name: j.name,
-            type: j.type,
-            income: j.income,
-          }));
-
-        return {
-          _id: pb.id,
-          building_id: pb.buildingID,
-          used_tiles: usedTiles,
-          jobs: jobsForPB,
-        };
-      });
-
-    return {
-      _id: r.id,
-      name: r.name,
-      city_id: r.city_id,
-      isUnlocked: r.isUnlocked,
-      tiles: tilesForRegion,
-      placedBuilding: placedInRegion,
-    };
-  });
-
-  // ----------------------------------------------------------
-  // PERSONS → Optional Job
-  // ----------------------------------------------------------
-  const mongoPersons = persons.map((p) => {
-    const job = jobs.find((j) => j.personID === p.id);
-    let jobObj = undefined;
-
-    if (job) {
-      jobObj = {
-        job_id: job.id,
-        job_name: job.name,
-        placedBuilding_id: job.placedBuildingID,
-      };
-    }
-
-    return {
-      _id: p.id,
-      name: p.name,
-      city_id: (p as any).city_id,
-      job: jobObj,
-    };
-  });
-
-  // ----------------------------------------------------------
-  // RETURN Mongo Data
-  // ----------------------------------------------------------
-  return {
-    resources: mongoResources,
-    users: mongoUsers,
-    regions: mongoRegions,
-    buildings: mongoBuildings,
-    tileTypes: mongoTileTypes,
-    persons: mongoPersons,
-  };
+  return result;
 }

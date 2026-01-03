@@ -1,4 +1,4 @@
-import { connectDB } from "../../src/db/index.js";
+import { connectDB } from "../../src/db/sql/index.js";
 
 export type TDB = ReturnType<typeof connectDB>;
 

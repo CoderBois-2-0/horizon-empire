@@ -82,7 +82,46 @@ async function getAllData(db: TDB) {
 
   // console.log("users:", users);
   // console.log("cities", cities);
-  console.log("audit placedbuildings", auditPlacedBuildings);
+  // console.log("audit placedbuildings", auditPlacedBuildings);
+
+  // console.log(
+  //   "logging all: ",
+  //   users,
+  //   "----",
+  //   cities,
+  //   "----",
+  //   regions,
+  //   "----",
+  //   buildings,
+  //   "----",
+  //   maps,
+  //   "----",
+  //   tileTypes,
+  //   "----",
+  //   tiles,
+  //   "----",
+  //   inventories,
+  //   "----",
+  //   resources,
+  //   "----",
+  //   placedBuildings,
+  //   "----",
+  //   persons,
+  //   "----",
+  //   jobs,
+  //   "----",
+  //   inventoryResources,
+  //   "----",
+  //   regionResourceCosts,
+  //   "----",
+  //   buildingResourceCosts,
+  //   "----",
+  //   buildingTileTypes,
+  //   "----",
+  //   auditPlacedBuildings,
+  //   "----",
+  //   placedBuildingTileTypes
+  // );
 
   return {
     users,
