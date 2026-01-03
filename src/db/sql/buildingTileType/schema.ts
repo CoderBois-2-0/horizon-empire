@@ -1,4 +1,4 @@
-import { buildingTable } from "$db/building/schema";
+import { buildingTable } from "$db/sql/building/schema";
 import { tileTypeTable } from "$db/sql/tileType/schema";
 import { foreignKey, pgTable, varchar } from "drizzle-orm/pg-core";
 

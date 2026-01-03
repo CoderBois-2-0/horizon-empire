@@ -11,7 +11,7 @@ class CitySQLHandler {
 
   async createCity(newCity: ICityInsert): Promise<void> {
     await this.#client.execute(
-      sql`CALL create_city(${newCity.mapType}, ${newCity.mapSize}, ${newCity.userID}, ${newCity.cityName})`,
+      sql`CALL create_city(${newCity.mapType}, ${newCity.mapSize}, ${newCity.userID}, ${newCity.cityName})`
     );
   }
 }

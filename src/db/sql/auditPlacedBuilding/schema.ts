@@ -6,7 +6,7 @@ import {
   timestamp,
   pgEnum,
 } from "drizzle-orm/pg-core";
-import { placedBuildingTable } from "$db/placedBuilding/schema";
+import { placedBuildingTable } from "$db/sql/placedBuilding/schema";
 import { userTable } from "$db/sql/user/schema";
 
 const placedBuildingActionType = pgEnum("placed_building_action_type", [

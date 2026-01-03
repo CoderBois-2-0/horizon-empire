@@ -30,13 +30,13 @@ class UserSQLHandler {
 
   async findByUserCredentials(
     username: TUser["username"],
-    password: TUser["password"],
+    password: TUser["password"]
   ): Promise<TSafeUser | undefined> {
     const userOptional = await this.#client.query.userTable.findFirst({
       where: (user, { and, eq }) =>
         and(
           eq(user.username, username),
-          sql`"password" = crypt(${password}, "password")`,
+          sql`"password" = crypt(${password}, "password")`
         ),
     });
 

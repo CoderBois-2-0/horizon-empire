@@ -1,13 +1,9 @@
 import type { Driver } from "neo4j-driver";
-import { CITY_CYPHER } from "./cypher";
 import type { CityDTO, CreateCityInput, CreateCityPayload } from "./types";
-
-type ResolverContext = {
-  driver: Driver;
-};
+import { CityGraphHandler } from "./handler";
 
 export function makeCityResolvers(driver: Driver) {
-  const ctx: ResolverContext = { driver };
+  const handler = new CityGraphHandler(driver);
 
   return {
     Query: {
@@ -16,16 +12,7 @@ export function makeCityResolvers(driver: Driver) {
         _parent: unknown,
         args: { id: string }
       ): Promise<CityDTO | null> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeRead((tx) =>
-            tx.run(CITY_CYPHER.getById, { id: args.id })
-          );
-          const record = res.records[0];
-          return record ? (record.get("city") as CityDTO) : null;
-        } finally {
-          await session.close();
-        }
+        return handler.getCityById(args.id);
       },
     },
 
@@ -35,26 +22,8 @@ export function makeCityResolvers(driver: Driver) {
         _parent: unknown,
         args: { input: CreateCityInput }
       ): Promise<CreateCityPayload> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeWrite((tx) =>
-            tx.run(CITY_CYPHER.create, {
-              name: args.input.name,
-              userID: args.input.userID,
-              mapID: args.input.mapID,
-            })
-          );
-
-          const record = res.records[0];
-          if (!record) {
-            // Mirrors SQL foreign key failure (user or map does not exist)
-            throw new Error("Unable to create city: user or map not found.");
-          }
-
-          return { city: record.get("city") as CityDTO };
-        } finally {
-          await session.close();
-        }
+        const city = await handler.createCity(args.input);
+        return { city };
       },
 
       // Delete a city by its ID and remove all its graph relationships
@@ -62,17 +31,7 @@ export function makeCityResolvers(driver: Driver) {
         _parent: unknown,
         args: { id: string }
       ): Promise<string> => {
-        const session = ctx.driver.session();
-        try {
-          const res = await session.executeWrite((tx) =>
-            tx.run(CITY_CYPHER.deleteById, { id: args.id })
-          );
-          const record = res.records[0];
-          if (!record) throw new Error("City not found.");
-          return record.get("id") as string;
-        } finally {
-          await session.close();
-        }
+        return handler.deleteCity(args.id);
       },
     },
   };

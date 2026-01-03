@@ -1,5 +1,5 @@
 import { userTable } from "$db/sql/user/schema.js";
-import { mapTable } from "$db/map/schema.js";
+import { mapTable } from "$db/sql/map/schema.js";
 import { foreignKey, pgTable, varchar } from "drizzle-orm/pg-core";
 
 const cityTable = pgTable(

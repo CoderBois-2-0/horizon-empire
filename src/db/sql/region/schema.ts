@@ -1,4 +1,4 @@
-import { mapTable } from "$db/map/schema.js";
+import { mapTable } from "$db/sql/map/schema.js";
 import { getTableColumns, relations, sql } from "drizzle-orm";
 import {
   pgTable,
