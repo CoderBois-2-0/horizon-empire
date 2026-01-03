@@ -3,7 +3,7 @@ import { placedBuildingTable } from "./schema";
 import { buildingTable } from "../building/schema";
 import { cityTable } from "../city/schema";
 import { regionsTable } from "../region/schema";
-import { auditPlacedBuildingTable } from "../auditPlacedBuilding/schema";
+// import { auditPlacedBuildingTable } from "../auditPlacedBuilding/schema";
 
 export const placedBuildingRelations = relations(
   placedBuildingTable,
@@ -23,13 +23,11 @@ export const placedBuildingRelations = relations(
   }),
 );
 
-export const placedBuildingAudits = relations(
-  placedBuildingTable,
-  ({ one, many }) => ({
-    building: one(buildingTable, {
-      fields: [placedBuildingTable.buildingID],
-      references: [buildingTable.id],
-    }),
-    auditEntries: many(auditPlacedBuildingTable),
-  }),
-);
+// export const placedBuildingAudits = relations(placedBuildingTable, ({ one, many }) => ({
+//   building: one(buildingTable, {
+//     fields: [placedBuildingTable.buildingID],
+//     references: [buildingTable.id],
+//   }),
+
+//   auditEntries: many(auditPlacedBuildingTable),
+// }));

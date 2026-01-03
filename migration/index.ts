@@ -1,5 +1,7 @@
 import { fetchPostgreSQLData } from "./postgresql/fetchPostgresData.js";
 import { transformToMongo } from "./mongoDB/transform.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 async function migrateData() {
   try {
@@ -12,7 +14,8 @@ async function migrateData() {
 
   // TODO: later insert migraton to neo4j
 
-  console.log("Migrated all data successfully!");
+  // console.log("Migrated all data successfully!");
+  console.log("migrateData has run");
 }
 
-// migrateData()
+migrateData();

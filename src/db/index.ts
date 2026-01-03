@@ -18,6 +18,7 @@ import * as auditPlacedBuildingSchema from "./auditPlacedBuilding/schema.js";
 import * as incomeGroupSchema from "./incomeGroup/schema.js";
 import * as buildingTileTypeSchema from "./buildingTileType/schema.js";
 import * as placedBuildingTileTypeSchema from "./placedBuildingTileType/schema.js";
+import * as allRelations from "./relations.js";
 
 function generateID() {
   return crypto.randomUUID();
@@ -45,6 +46,7 @@ function connectDB(dbUrl: string) {
       ...incomeGroupSchema,
       ...placedBuildingTileTypeSchema,
       ...buildingTileTypeSchema,
+      ...allRelations,
     },
   });
 }

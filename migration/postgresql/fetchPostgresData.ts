@@ -80,6 +80,10 @@ async function getAllData(db: TDB) {
     with: { region: true, resource: true },
   });
 
+  // console.log("users:", users);
+  // console.log("cities", cities);
+  console.log("audit placedbuildings", auditPlacedBuildings);
+
   return {
     users,
     cities,
