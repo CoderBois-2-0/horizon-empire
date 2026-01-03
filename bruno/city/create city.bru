@@ -1,0 +1,28 @@
+meta {
+  name: create city
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{path}}?db=document
+  body: json
+  auth: inherit
+}
+
+params:query {
+  db: document
+}
+
+body:json {
+  {
+    "name": "Suna",
+    "mapType": "desert",
+    "mapSize": "large"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
