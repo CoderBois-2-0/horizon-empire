@@ -1,8 +1,7 @@
 import { relations } from "drizzle-orm";
 import { placedBuildingTileTypeTable } from "./schema";
-
 import { tileTypeTable } from "../tileType/schema";
-import { placedBuildingTable } from "$db/placedBuilding/schema";
+import { placedBuildingTable } from "../placedBuilding/schema";
 
 export const placedBuildingTileTypeRelations = relations(
   placedBuildingTileTypeTable,

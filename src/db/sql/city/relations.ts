@@ -2,7 +2,8 @@ import { relations } from "drizzle-orm";
 import { cityTable } from "./schema.js";
 import { userTable } from "../user/schema.js";
 import { mapTable } from "../map/schema.js";
-import { inventoryTable } from "$db/inventory/schema.js";
+import { inventoryTable } from "../inventory/schema.js";
+
 
 export const cityRelations = relations(cityTable, ({ one }) => ({
   user: one(userTable, {

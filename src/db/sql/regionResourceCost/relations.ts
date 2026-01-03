@@ -1,5 +1,5 @@
-import { regionsTable } from "$db/region/schema.js";
-import { resourceTable } from "$db/resource/schema.js";
+import { regionsTable } from "../region/schema.js";
+import { resourceTable } from "../resource/schema.js";
 import { regionResourceCostTable } from "./schema.js";
 import { relations } from "drizzle-orm";
 

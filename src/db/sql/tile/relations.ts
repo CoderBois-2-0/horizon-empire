@@ -1,7 +1,8 @@
 import { relations } from "drizzle-orm";
 import { tileTable } from "./schema";
 import { tileTypeTable } from "../tileType/schema";
-import { regionsTable } from "$db/region/schema";
+import { regionsTable } from "../region/schema";
+
 
 export const tileRelations = relations(tileTable, ({ one }) => ({
   region: one(regionsTable, {

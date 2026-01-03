@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { inventoryResourceTable } from "./schema";
 import { resourceTable } from "../resource/schema";
-import { inventoryTable } from "$db/inventory/schema";
+import { inventoryTable } from "../inventory/schema";
 
 export const inventoryResourceRelations = relations(
   inventoryResourceTable,
