@@ -1,0 +1,56 @@
+services:
+  postgresdb:
+    image: postgres:latest
+    container_name: postgresdb-Horizon
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: "123456"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data_horizon:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo:
+    image: mongo:8.2.3
+    container_name: mongo-Horizon
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data_horizon:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  neo4jdb:
+    image: neo4j:latest
+    container_name: neo4jdb-Horizon
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: "neo4j/12345678"
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data_horizon:/data
+      - neo4j_logs_horizon:/logs
+      - neo4j_import_horizon:/var/lib/neo4j/import
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  postgres_data_horizon:
+  mongo_data_horizon:
+  neo4j_data_horizon:
+  neo4j_logs_horizon:
+  neo4j_import_horizon:

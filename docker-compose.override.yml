@@ -1,0 +1,5 @@
+services:
+  postgresdb:
+    volumes:
+      - ./migration/sql/postgres_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./migration/sql/postgres_seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro

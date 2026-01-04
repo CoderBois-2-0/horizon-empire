@@ -1,6 +1,5 @@
 import { pgTable, varchar, foreignKey } from "drizzle-orm/pg-core";
 import { regionsTable } from "$db/sql/region/schema.js";
-import { relations } from "drizzle-orm";
 import { tileTypeTable } from "$db/sql/tileType/schema.js";
 
 const tileTable = pgTable(
@@ -22,11 +21,4 @@ const tileTable = pgTable(
   ],
 );
 
-const tileRelations = relations(tileTable, ({ one }) => ({
-  region: one(regionsTable, {
-    fields: [tileTable.regionID],
-    references: [regionsTable.id],
-  }),
-}));
-
-export { tileTable, tileRelations };
+export { tileTable };
