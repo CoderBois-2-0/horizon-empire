@@ -1,6 +1,7 @@
 import { fetchPostgreSQLData } from "./postgresql/fetchPostgresData.js";
 import dotenv from "dotenv";
 import { migrateToMongo } from "./mongoDB/index.js";
+import { migrateToNeo4j } from "./neo4j/index.js";
 dotenv.config();
 
 async function migrateData() {
@@ -23,11 +24,11 @@ async function migrateData() {
       console.error("Error migrating to MongoDB:", error);
     }
 
-    // try {
-    //   await migrateToNeo4j(sql);
-    // } catch (error) {
-    //   console.log("Error migrating to Neo4j:", error);
-    // }
+    try {
+      await migrateToNeo4j(sql);
+    } catch (error) {
+      console.log("Error migrating to Neo4j:", error);
+    }
 
     console.log("Migration finished");
     process.exit(0);
