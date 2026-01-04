@@ -1,12 +1,12 @@
 // import { connectDB, TDB } from "$db/index";
 // import { TDB, connectToDB } from "./db.js";
-import { connectToDB, TDB } from "../../../migration/postgresql/db";
-import { inventoryTable } from "./schema";
+
+import { connectToDB, TDB } from "../../../../migration/postgresql/db";
 import { IIventory } from "./types";
 
 class InventoryHandler {
   #client: TDB;
-  #table = inventoryTable;
+  // #table = inventoryTable;
 
   //   constructor(dbUrl: string) {
   //     const db = connectDB(dbUrl);

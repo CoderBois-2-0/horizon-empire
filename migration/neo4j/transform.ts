@@ -168,7 +168,6 @@ export function transformSqlToNeo4j(data: PostgresData): GraphMutations {
   // Create Regions and Map->Region relationships
   const createRegion = regions.map((r) => {
     // Find city that owns this region's map
-    const regionMap = data.maps.find((m) => m.id === r.mapID);
     const regionCity = cities.find((c) => c.mapID === r.mapID);
 
     if (regionCity) {

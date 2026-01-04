@@ -7,7 +7,7 @@ import { regionsTable } from "../region/schema";
 
 export const placedBuildingRelations = relations(
   placedBuildingTable,
-  ({ one, many }) => ({
+  ({ one }) => ({
     building: one(buildingTable, {
       fields: [placedBuildingTable.buildingID],
       references: [buildingTable.id],

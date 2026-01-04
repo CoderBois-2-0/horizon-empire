@@ -1,9 +1,6 @@
 import mongoose, { InferSchemaType } from "mongoose";
 import { PostgresData } from "../postgresql/fetchPostgresData.js";
-import {
-  regionSchema,
-  tileSchema,
-} from "../../src/db/document/region/schema.js";
+import { tileSchema } from "../../src/db/document/region/schema.js";
 import { resourceSchema } from "../../src/db/document/resource/schema.js";
 import { tileTypeSchema } from "../../src/db/document/tileType/schema.js";
 // import { personSchema } from "../../src/db/document/person/schema.js";
@@ -13,7 +10,7 @@ import { TDocumentBuilding } from "$db/document/building/types.js";
 type TTile = Omit<InferSchemaType<typeof tileSchema>, "tileTypeID"> & {
   tileTypeID?: mongoose.Types.ObjectId;
 };
-type TDocumentRegion = InferSchemaType<typeof regionSchema>;
+
 type TDocumentResource = InferSchemaType<typeof resourceSchema>;
 type TDocumentTileType = InferSchemaType<typeof tileTypeSchema>;
 // type TPerson = InferSchemaType<typeof personSchema>;
@@ -81,7 +78,7 @@ export function transformSqlToMongo(data: PostgresData): TransformedData {
     inventories,
     resources,
     placedBuildings,
-    persons,
+
     jobs,
     inventoryResources,
     buildingTileTypes,
@@ -159,7 +156,7 @@ export function transformSqlToMongo(data: PostgresData): TransformedData {
   });
 
   // --- Transform Tiles ---
-  const transformTiles = (tileList: any[]): TTile[] =>
+  const transformTiles = (tileList: typeof tiles): TTile[] =>
     tileList.map((tile) => ({
       tileTypeID: getTileTypeObjectId(tile.tileTypeID),
       type: (tileTypes.find((tt) => tt.id === tile.tileTypeID)?.name ||
@@ -168,7 +165,9 @@ export function transformSqlToMongo(data: PostgresData): TransformedData {
     }));
 
   // --- Transform Placed Buildings ---
-  const transformPlacedBuildings = (pbList: any[]): TPlacedBuilding[] =>
+  const transformPlacedBuildings = (
+    pbList: typeof placedBuildings,
+  ): TPlacedBuilding[] =>
     pbList.map((pb) => {
       const pbTileTypes = placedBuildingTileTypes.filter(
         (pbt) => pbt.placedBuildingID === pb.id,
