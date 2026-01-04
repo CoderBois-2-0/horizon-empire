@@ -3,6 +3,7 @@ import { Schema } from "mongoose";
 const inventorySchema = new Schema({
   resourceID: {
     type: Schema.Types.ObjectId,
+    ref: "Resource",
     required: true,
   },
   resourceName: {
