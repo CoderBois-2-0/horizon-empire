@@ -5,11 +5,10 @@ import { TSafeUser } from "$db/sql/user/types";
 import { TLoginUser, TSignUpUser } from "./types";
 import { makeNeo4jDriver } from "$db/graph/neo4j";
 
-
 interface IUserService {
   create: (newUser: TSignUpUser) => Promise<TSafeUser>;
   findByUserCredentials: (
-    user: TLoginUser
+    user: TLoginUser,
   ) => Promise<TSafeUser | undefined | null>;
 }
 
@@ -41,7 +40,7 @@ function createDocumentService(dbURL: string): IUserService {
     findByUserCredentials: async (user) => {
       const foundUser = await userDocumentHandlder.findByCredentials(
         user.username,
-        user.password
+        user.password,
       );
       if (!foundUser) {
         return null;

@@ -44,12 +44,16 @@ function createGraphService(): ICityService {
 
   return {
     createCity: async (userID, cityRequest) => {
-      await cityHandler.createCity({
+      const input: Parameters<CityGraphHandler["createCity"]>[0] = {
         name: cityRequest.name,
         userID,
-        mapType: cityRequest.mapType,
-        mapSize: cityRequest.mapSize,
-      } as any);
+        map: {
+          type: cityRequest.mapType,
+          size: cityRequest.mapSize,
+        },
+      };
+
+      await cityHandler.createCity(input);
     },
   };
 }

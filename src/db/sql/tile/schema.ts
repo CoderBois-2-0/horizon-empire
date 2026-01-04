@@ -18,7 +18,7 @@ const tileTable = pgTable(
       columns: [table.tileTypeID],
       foreignColumns: [tileTypeTable.id],
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export { tileTable };

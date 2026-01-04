@@ -19,7 +19,7 @@ const cityTable = pgTable(
       columns: [table.mapID],
       foreignColumns: [mapTable.id],
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export { cityTable };

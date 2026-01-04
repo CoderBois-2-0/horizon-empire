@@ -34,7 +34,7 @@ class RegionHandler {
   // payment logic
   async paymentFunction(
     inventoryID: string,
-    regionID: string
+    regionID: string,
   ): Promise<boolean> {
     // 1. Fetch region cost
     const regionCost =
@@ -63,7 +63,7 @@ class RegionHandler {
     inv.coin -= cost;
 
     console.log(
-      `Inventory ${inventoryID} paid ${cost}. Remaining gold: ${inv.coin}`
+      `Inventory ${inventoryID} paid ${cost}. Remaining gold: ${inv.coin}`,
     );
 
     return true;
@@ -87,7 +87,7 @@ class RegionHandler {
   async unlockRegion(
     regionID: string,
     inventoryID: string,
-    isUnlocked: boolean
+    isUnlocked: boolean,
   ): Promise<void> {
     const allowed = await this.canUnlock(regionID, inventoryID);
     if (!allowed) return;

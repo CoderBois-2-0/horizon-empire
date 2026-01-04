@@ -18,7 +18,7 @@ export class UserGraphHandler {
         tx.run(USER_CYPHER.create, {
           username: input.username,
           password: input.password,
-        })
+        }),
       );
 
       const record = res.records[0];
@@ -33,7 +33,7 @@ export class UserGraphHandler {
     const session = this.driver.session();
     try {
       const res = await session.executeRead((tx) =>
-        tx.run(USER_CYPHER.getById, { id })
+        tx.run(USER_CYPHER.getById, { id }),
       );
       return (res.records[0]?.get("user") as UserDTO) ?? null;
     } finally {
@@ -45,7 +45,7 @@ export class UserGraphHandler {
     const session = this.driver.session();
     try {
       const res = await session.executeRead((tx) =>
-        tx.run(USER_CYPHER.getByUsername, { username })
+        tx.run(USER_CYPHER.getByUsername, { username }),
       );
       return (res.records[0]?.get("user") as UserDTO) ?? null;
     } finally {
@@ -60,7 +60,7 @@ export class UserGraphHandler {
     const session = this.driver.session();
     try {
       const res = await session.executeRead((tx) =>
-        tx.run(USER_CYPHER.getAuthByUsername, { username })
+        tx.run(USER_CYPHER.getAuthByUsername, { username }),
       );
       return (res.records[0]?.get("user") as UserAuthDTO) ?? null;
     } finally {
@@ -72,7 +72,7 @@ export class UserGraphHandler {
     const session = this.driver.session();
     try {
       const res = await session.executeWrite((tx) =>
-        tx.run(USER_CYPHER.deleteByIdCascadeCities, { id })
+        tx.run(USER_CYPHER.deleteByIdCascadeCities, { id }),
       );
       const record = res.records[0];
       if (!record) throw new Error("User not found.");

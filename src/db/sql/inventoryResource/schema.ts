@@ -19,7 +19,7 @@ const inventoryResourceTable = pgTable(
       columns: [table.inventoryID],
       foreignColumns: [inventoryTable.id],
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export { inventoryResourceTable };

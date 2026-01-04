@@ -30,7 +30,7 @@ const auditPlacedBuildingTable = pgTable(
       columns: [table.buildingID],
       foreignColumns: [placedBuildingTable.id],
     }),
-  ]
+  ],
 );
 
 export { auditPlacedBuildingTable, placedBuildingActionType };

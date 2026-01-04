@@ -13,7 +13,7 @@ export class CityGraphHandler {
           name: input.name,
           userID: input.userID,
           mapID: input.mapID,
-        })
+        }),
       );
 
       const record = res.records[0];
@@ -28,7 +28,7 @@ export class CityGraphHandler {
     const session = this.driver.session();
     try {
       const res = await session.executeRead((tx) =>
-        tx.run(CITY_CYPHER.getById, { id })
+        tx.run(CITY_CYPHER.getById, { id }),
       );
       return (res.records[0]?.get("city") as CityDTO) ?? null;
     } finally {
@@ -40,7 +40,7 @@ export class CityGraphHandler {
     const session = this.driver.session();
     try {
       const res = await session.executeWrite((tx) =>
-        tx.run(CITY_CYPHER.deleteById, { id })
+        tx.run(CITY_CYPHER.deleteById, { id }),
       );
       const record = res.records[0];
       if (!record) throw new Error("City not found.");

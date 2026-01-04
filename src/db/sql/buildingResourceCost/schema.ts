@@ -26,6 +26,6 @@ const buildingResourceCostTable = pgTable(
       columns: [table.resourceID],
       foreignColumns: [resourceTable.id],
     }),
-  ]
+  ],
 );
 export { buildingResourceCostTable };

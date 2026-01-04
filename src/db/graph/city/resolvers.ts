@@ -10,7 +10,7 @@ export function makeCityResolvers(driver: Driver) {
       // Fetch a single city by its ID, including its user and map relationships
       city: async (
         _parent: unknown,
-        args: { id: string }
+        args: { id: string },
       ): Promise<CityDTO | null> => {
         return handler.getCityById(args.id);
       },
@@ -20,7 +20,7 @@ export function makeCityResolvers(driver: Driver) {
       // Create a new city and link it to an existing user and map
       createCity: async (
         _parent: unknown,
-        args: { input: CreateCityInput }
+        args: { input: CreateCityInput },
       ): Promise<CreateCityPayload> => {
         const city = await handler.createCity(args.input);
         return { city };
@@ -29,7 +29,7 @@ export function makeCityResolvers(driver: Driver) {
       // Delete a city by its ID and remove all its graph relationships
       deleteCity: async (
         _parent: unknown,
-        args: { id: string }
+        args: { id: string },
       ): Promise<string> => {
         return handler.deleteCity(args.id);
       },

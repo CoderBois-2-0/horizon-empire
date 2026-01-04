@@ -24,7 +24,7 @@ const placedBuildingTable = pgTable(
       columns: [table.regionID],
       foreignColumns: [regionsTable.id],
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export { placedBuildingTable };

@@ -10,7 +10,7 @@ export function makeUserResolvers(driver: Driver) {
       // Fetch a user by id (safe fields only)
       user: async (
         _parent: unknown,
-        args: { id: string }
+        args: { id: string },
       ): Promise<UserDTO | null> => {
         return handler.getUserById(args.id);
       },
@@ -18,7 +18,7 @@ export function makeUserResolvers(driver: Driver) {
       // Fetch a user by username (safe fields only)
       userByUsername: async (
         _parent: unknown,
-        args: { username: string }
+        args: { username: string },
       ): Promise<UserDTO | null> => {
         return handler.getUserByUsername(args.username);
       },
@@ -28,7 +28,7 @@ export function makeUserResolvers(driver: Driver) {
       // Create a new user (username must be unique). Returns safe user.
       createUser: async (
         _parent: unknown,
-        args: { input: CreateUserInput }
+        args: { input: CreateUserInput },
       ): Promise<CreateUserPayload> => {
         const user = await handler.createUser(args.input);
         return { user };
@@ -37,7 +37,7 @@ export function makeUserResolvers(driver: Driver) {
       // Delete user by id (and cascade-delete owned cities)
       deleteUser: async (
         _parent: unknown,
-        args: { id: string }
+        args: { id: string },
       ): Promise<string> => {
         return handler.deleteUser(args.id);
       },

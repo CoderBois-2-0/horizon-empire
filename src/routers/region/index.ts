@@ -36,6 +36,6 @@ regionRouter.put(
       console.error("Unlock error:", err);
       return c.json({ error: "Failed to unlock region" }, 500);
     }
-  }
+  },
 );
 export { regionRouter };

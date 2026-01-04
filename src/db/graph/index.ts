@@ -9,6 +9,8 @@ import { makeUserResolvers } from "./user/resolvers";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+type ResolverMap = Record<string, unknown>;
+
 export function loadGraphTypeDefs(): string[] {
   const base = `
     scalar DateTime
@@ -18,17 +20,17 @@ export function loadGraphTypeDefs(): string[] {
 
   const citySDL = readFileSync(
     path.join(__dirname, "./city/schema.graphql"),
-    "utf8"
+    "utf8",
   );
 
   const userSDL = readFileSync(
     path.join(__dirname, "./user/schema.graphql"),
-    "utf8"
+    "utf8",
   );
 
   return [base, citySDL, userSDL];
 }
 
-export function loadGraphResolvers(driver: Driver): Array<Record<string, any>> {
+export function loadGraphResolvers(driver: Driver): ResolverMap[] {
   return [makeCityResolvers(driver), makeUserResolvers(driver)];
 }
