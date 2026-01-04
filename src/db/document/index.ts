@@ -1,4 +1,4 @@
-import mongoose, { ClientSession, Mongoose } from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 async function getConn(dbURL: string) {
   return mongoose.connect(dbURL, {
