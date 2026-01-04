@@ -23,7 +23,10 @@ export async function migrateToNeo4j(data: PostgresData | null) {
 
     console.log("Creating Users...");
     for (const user of graphData.createUser) {
-      await session.run("CREATE (u:User {id: $id, username: $username, password: $password})", user);
+      await session.run(
+        "CREATE (u:User {id: $id, username: $username, password: $password})",
+        user,
+      );
     }
     console.log(`Created ${graphData.createUser.length} users`);
 
@@ -41,7 +44,10 @@ export async function migrateToNeo4j(data: PostgresData | null) {
 
     console.log("Creating Buildings...");
     for (const building of graphData.createBuilding) {
-      await session.run("CREATE (b:Building {id: $id, name: $name, type: $type, tilesNeeded: $tilesNeeded, maxPersons: $maxPersons})", building);
+      await session.run(
+        "CREATE (b:Building {id: $id, name: $name, type: $type, tilesNeeded: $tilesNeeded, maxPersons: $maxPersons})",
+        building,
+      );
     }
     console.log(`Created ${graphData.createBuilding.length} buildings`);
 
@@ -53,7 +59,10 @@ export async function migrateToNeo4j(data: PostgresData | null) {
 
     console.log("Creating Regions...");
     for (const region of graphData.createRegion) {
-      await session.run("CREATE (r:Region {id: $id, name: $name, isUnlocked: $isUnlocked})", region);
+      await session.run(
+        "CREATE (r:Region {id: $id, name: $name, isUnlocked: $isUnlocked})",
+        region,
+      );
     }
     console.log(`Created ${graphData.createRegion.length} regions`);
 
@@ -67,7 +76,9 @@ export async function migrateToNeo4j(data: PostgresData | null) {
     for (const pb of graphData.createPlacedBuilding) {
       await session.run("CREATE (p:PlacedBuilding {id: $id})", pb);
     }
-    console.log(`Created ${graphData.createPlacedBuilding.length} placed buildings`);
+    console.log(
+      `Created ${graphData.createPlacedBuilding.length} placed buildings`,
+    );
 
     console.log("Creating Inventories...");
     for (const inv of graphData.createInventory) {
@@ -77,7 +88,10 @@ export async function migrateToNeo4j(data: PostgresData | null) {
 
     console.log("Creating Jobs...");
     for (const job of graphData.createJob) {
-      await session.run("CREATE (j:Job {id: $id, name: $name, type: $type, income: $income})", job);
+      await session.run(
+        "CREATE (j:Job {id: $id, name: $name, type: $type, income: $income})",
+        job,
+      );
     }
     console.log(`Created ${graphData.createJob.length} jobs`);
 
@@ -93,7 +107,9 @@ export async function migrateToNeo4j(data: PostgresData | null) {
         toId: rel.to,
       });
     }
-    console.log(`Created ${graphData.createRelationships.length} relationships`);
+    console.log(
+      `Created ${graphData.createRelationships.length} relationships`,
+    );
 
     await session.close();
     console.log("Migration to Neo4j completed successfully!");

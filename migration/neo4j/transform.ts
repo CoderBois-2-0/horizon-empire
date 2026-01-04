@@ -183,7 +183,9 @@ export function transformSqlToNeo4j(data: PostgresData): GraphMutations {
     }
 
     // Add Region costs relationships
-    const regionCosts = regionResourceCosts.filter((rc) => rc.regionID === r.id);
+    const regionCosts = regionResourceCosts.filter(
+      (rc) => rc.regionID === r.id,
+    );
     regionCosts.forEach((rc) => {
       relationships.push({
         type: "COSTS",
@@ -205,7 +207,9 @@ export function transformSqlToNeo4j(data: PostgresData): GraphMutations {
   // Create Buildings and relationships
   const createBuilding = buildings.map((b) => {
     // Building --COSTS--> Resource
-    const buildingCosts = buildingResourceCosts.filter((bc) => bc.buildingID === b.id);
+    const buildingCosts = buildingResourceCosts.filter(
+      (bc) => bc.buildingID === b.id,
+    );
     buildingCosts.forEach((bc) => {
       relationships.push({
         type: "COSTS",
@@ -218,7 +222,9 @@ export function transformSqlToNeo4j(data: PostgresData): GraphMutations {
     });
 
     // Building --BUILDABLE_ON--> TileType
-    const buildingTiles = buildingTileTypes.filter((bt) => bt.buildingID === b.id);
+    const buildingTiles = buildingTileTypes.filter(
+      (bt) => bt.buildingID === b.id,
+    );
     buildingTiles.forEach((bt) => {
       relationships.push({
         type: "BUILDABLE_ON",
@@ -252,7 +258,9 @@ export function transformSqlToNeo4j(data: PostgresData): GraphMutations {
     });
 
     // PlacedBuilding --OCCUPIES--> Tile
-    const pbTiles = placedBuildingTileTypes.filter((pbt) => pbt.placedBuildingID === pb.id);
+    const pbTiles = placedBuildingTileTypes.filter(
+      (pbt) => pbt.placedBuildingID === pb.id,
+    );
     pbTiles.forEach((pbt) => {
       relationships.push({
         type: "OCCUPIES",
@@ -282,7 +290,9 @@ export function transformSqlToNeo4j(data: PostgresData): GraphMutations {
     });
 
     // Inventory --CONTAINS--> Resource
-    const invResources = inventoryResources.filter((ir) => ir.inventoryID === inv.id);
+    const invResources = inventoryResources.filter(
+      (ir) => ir.inventoryID === inv.id,
+    );
     invResources.forEach((ir) => {
       relationships.push({
         type: "CONTAINS",
