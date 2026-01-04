@@ -56,9 +56,9 @@ export async function migrateToMongo(data: PostgresData | null) {
     // await personModel.insertMany(transformedData.persons);
     // console.log("Persons data copied to MongoDB!");
 
-    console.log("Migration completed successfully!");
+    console.log("Migration to mongoDB completed successfully!");
   } catch (error) {
-    console.error("Error during migration:", error);
+    console.error("Error during migration to MongoDB:", error);
     throw error;
   }
 }

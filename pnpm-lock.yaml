@@ -32,6 +32,9 @@ importers:
       neo4j-driver:
         specifier: ^6.0.1
         version: 6.0.1
+      neo4j-ogm:
+        specifier: 1.0.0-dev.2
+        version: 1.0.0-dev.2
       pg:
         specifier: ^8.16.3
         version: 8.16.3
@@ -1889,6 +1892,10 @@ packages:
   csv-parse@5.6.0:
     resolution: {integrity: sha512-l3nz3euub2QMg5ouu5U09Ew9Wf6/wQ8I++ch1loQ0ljmzhmfZYrH9fflS22i/PQEvsPvxCwxgz5q7UB8K1JO4Q==}
 
+  cuid@3.0.0:
+    resolution: {integrity: sha512-WZYYkHdIDnaxdeP8Misq3Lah5vFjJwGuItJuV+tvMafosMzw0nF297T7mrm8IOWiPJkV6gc7sa8pzx27+w25Zg==}
+    deprecated: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.
+
   dashdash@1.14.1:
     resolution: {integrity: sha512-jRFi8UDGo6j+odZiEpjazZaWqEal3w/basFjQHQEwVtZJGDpxbH1MeYluwCS8Xq5wmLJooDlMgvVarmWfGM44g==}
     engines: {node: '>=0.10'}
@@ -2734,15 +2741,27 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
+  neo4j-driver-bolt-connection@5.28.2:
+    resolution: {integrity: sha512-dEX06iNPEo9iyCb0NssxJeA3REN+H+U/Y0MdAjJBEoil4tGz5PxBNZL6/+noQnu2pBJT5wICepakXCrN3etboA==}
+
   neo4j-driver-bolt-connection@6.0.1:
     resolution: {integrity: sha512-1KyG73TO+CwnYJisdHD0sjUw9yR+P5q3JFcmVPzsHT4/whzCjuXSMpmY4jZcHH2PdY2cBUq4l/6WcDiPMxW2UA==}
+
+  neo4j-driver-core@5.28.2:
+    resolution: {integrity: sha512-fBMk4Ox379oOz4FcfdS6ZOxsTEypjkcAelNm9LcWQZ981xCdOnGMzlWL+qXECvL0qUwRfmZxoqbDlJzuzFrdvw==}
 
   neo4j-driver-core@6.0.1:
     resolution: {integrity: sha512-5I2KxICAvcHxnWdJyDqwu8PBAQvWVTlQH2ve3VQmtVdJScPqWhpXN1PiX5IIl+cRF3pFpz9GQF53B5n6s0QQUQ==}
 
+  neo4j-driver@5.28.2:
+    resolution: {integrity: sha512-nix4Canllf7Tl4FZL9sskhkKYoCp40fg7VsknSRTRgbm1JaE2F1Ej/c2nqlM06nqh3WrkI0ww3taVB+lem7w7w==}
+
   neo4j-driver@6.0.1:
     resolution: {integrity: sha512-8DDF2MwEJNz7y7cp97x4u8fmVIP4CWS8qNBxdwxTG0fWtsS+2NdeC+7uXwmmuFOpHvkfXqv63uWY73bfDtOH8Q==}
     engines: {node: '>=18.0.0'}
+
+  neo4j-ogm@1.0.0-dev.2:
+    resolution: {integrity: sha512-iqEYXBqkNs6UUTK8IPNSbvgf3NNNKhA0QXcriWfKz8qX7riuGQnuQFbvUBYatyaHNtdb0IlrEycgCdXv+V6gaA==}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -3208,6 +3227,13 @@ packages:
   type-detect@4.1.0:
     resolution: {integrity: sha512-Acylog8/luQ8L7il+geoSxhEkazvkslg7PSNKOX59mbB9cOveP5aq9h74Y7YU8yDpJwetzQQrfIwtf4Wp4LKcw==}
     engines: {node: '>=4'}
+
+  type-fest@3.13.1:
+    resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
+    engines: {node: '>=14.16'}
+
+  typed-cypher@1.0.0-dev.1:
+    resolution: {integrity: sha512-nciJnLkqmuzA3LiXdq7y8IwhggsVlXc4ZgT/pYApzv/O387hjn4v9V0y7ZvcnO+HjZIQBiUV3V1vTnJUVnvO8A==}
 
   typescript-eslint@8.44.1:
     resolution: {integrity: sha512-0ws8uWGrUVTjEeN2OM4K1pLKHK/4NiNP/vz6ns+LjT/6sqpaYzIVFajZb1fj/IDwpsrrHb3Jy0Qm5u9CPcKaeg==}
@@ -5728,6 +5754,8 @@ snapshots:
 
   csv-parse@5.6.0: {}
 
+  cuid@3.0.0: {}
+
   dashdash@1.14.1:
     dependencies:
       assert-plus: 1.0.0
@@ -6524,19 +6552,44 @@ snapshots:
 
   neo-async@2.6.2: {}
 
+  neo4j-driver-bolt-connection@5.28.2:
+    dependencies:
+      buffer: 6.0.3
+      neo4j-driver-core: 5.28.2
+      string_decoder: 1.3.0
+
   neo4j-driver-bolt-connection@6.0.1:
     dependencies:
       buffer: 6.0.3
       neo4j-driver-core: 6.0.1
       string_decoder: 1.3.0
 
+  neo4j-driver-core@5.28.2: {}
+
   neo4j-driver-core@6.0.1: {}
+
+  neo4j-driver@5.28.2:
+    dependencies:
+      neo4j-driver-bolt-connection: 5.28.2
+      neo4j-driver-core: 5.28.2
+      rxjs: 7.8.2
 
   neo4j-driver@6.0.1:
     dependencies:
       neo4j-driver-bolt-connection: 6.0.1
       neo4j-driver-core: 6.0.1
       rxjs: 7.8.2
+
+  neo4j-ogm@1.0.0-dev.2:
+    dependencies:
+      cuid: 3.0.0
+      debug: 4.4.3
+      neo4j-driver: 5.28.2
+      type-fest: 3.13.1
+      typed-cypher: 1.0.0-dev.1
+      zod: 3.22.3
+    transitivePeerDependencies:
+      - supports-color
 
   node-fetch@2.7.0:
     dependencies:
@@ -7020,6 +7073,12 @@ snapshots:
       prelude-ls: 1.2.1
 
   type-detect@4.1.0: {}
+
+  type-fest@3.13.1: {}
+
+  typed-cypher@1.0.0-dev.1:
+    dependencies:
+      type-fest: 3.13.1
 
   typescript-eslint@8.44.1(eslint@9.36.0(jiti@2.6.0))(typescript@5.9.2):
     dependencies:
