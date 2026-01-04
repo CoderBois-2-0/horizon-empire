@@ -9,7 +9,6 @@ export const USER_CYPHER = {
     RETURN u { .id, .username } AS user
   `,
 
-  // ✅ add this for auth usage
   getAuthByUsername: `
     MATCH (u:User {username: $username})
     RETURN u { .id, .username, .password } AS user
