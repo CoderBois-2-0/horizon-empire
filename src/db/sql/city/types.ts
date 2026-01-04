@@ -1,4 +1,4 @@
-import { TMap } from "$db/map/types";
+import { TMap } from "$db/sql/map/types";
 import { TUser } from "$db/sql/user/types";
 import { cityTable } from "./schema";
 
