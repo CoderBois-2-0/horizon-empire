@@ -7,9 +7,7 @@ const cityTable = pgTable(
   {
     id: varchar("id", { length: 36 }).primaryKey(),
     name: varchar("name", { length: 32 }).notNull(),
-
     userID: varchar("user_id", { length: 36 }).notNull(),
-
     mapID: varchar("map_id", { length: 36 }).notNull(),
   },
   (table) => [
