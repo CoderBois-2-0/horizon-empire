@@ -1,0 +1,25 @@
+type City {
+  id: ID!
+  name: String!
+  userID: ID!
+  mapID: ID!
+}
+
+input CreateCityInput {
+  name: String!
+  userID: ID!
+  mapID: ID!
+}
+
+type CreateCityPayload {
+  city: City!
+}
+
+extend type Query {
+  city(id: ID!): City
+}
+
+extend type Mutation {
+  createCity(input: CreateCityInput!): CreateCityPayload!
+  deleteCity(id: ID!): ID!
+}

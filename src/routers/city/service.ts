@@ -1,5 +1,7 @@
 import UserDocumentHandler from "$db/document/user/handler";
 import CitySQLHandler from "$db/sql/city/handler";
+import { makeNeo4jDriver } from "$db/graph/neo4j";
+import { CityGraphHandler } from "$db/graph/city/handler";
 import { TCityRequest } from "./types";
 
 interface ICityService {
@@ -36,4 +38,29 @@ function createDocumentService(dbURL: string): ICityService {
   };
 }
 
-export { ICityService, createSQLService, createDocumentService };
+function createGraphService(): ICityService {
+  const driver = makeNeo4jDriver();
+  const cityHandler = new CityGraphHandler(driver);
+
+  return {
+    createCity: async (userID, cityRequest) => {
+      const input: Parameters<CityGraphHandler["createCity"]>[0] = {
+        name: cityRequest.name,
+        userID,
+        map: {
+          type: cityRequest.mapType,
+          size: cityRequest.mapSize,
+        },
+      };
+
+      await cityHandler.createCity(input);
+    },
+  };
+}
+
+export {
+  ICityService,
+  createSQLService,
+  createDocumentService,
+  createGraphService,
+};
